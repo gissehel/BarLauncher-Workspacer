@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Wox.Workspacer.Core.Service
 {
-    public interface IWorkspaceService
+    public interface IWorkspacerService
     {
+        void Init();
     }
 }

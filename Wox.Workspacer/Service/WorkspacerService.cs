@@ -6,7 +6,11 @@ using Wox.Workspacer.Core.Service;
 
 namespace Wox.Workspacer.Service
 {
-    public class WorkspaceService : IWorkspaceService
+    public class WorkspacerService : IWorkspacerService
     {
+        public void Init()
+        {
+
+        }
     }
 }

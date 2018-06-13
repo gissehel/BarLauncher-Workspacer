@@ -53,7 +53,7 @@
     <Compile Include="Core\Service\IQueryService.cs" />
     <Compile Include="Core\Service\IResultService.cs" />
     <Compile Include="Core\Service\ISystemService.cs" />
-    <Compile Include="Core\Service\IWorkspaceService.cs" />
+    <Compile Include="Core\Service\IWorkspacerService.cs" />
     <Compile Include="Core\Service\IWoxContextService.cs" />
     <Compile Include="Core\Service\IWoxResultFinder.cs" />
     <Compile Include="DomainModel\WoxQuery.cs" />
@@ -66,7 +66,7 @@
     <Compile Include="Service\ResultService.cs" />
     <Compile Include="Service\SystemService.cs" />
     <Compile Include="Service\WorkspacerResultFinder.cs" />
-    <Compile Include="Service\WorkspaceService.cs" />
+    <Compile Include="Service\WorkspacerService.cs" />
     <Compile Include="Service\WoxContextService.cs" />
     <Compile Include="..\Version.cs" />
     <Compile Include="WorkspacerPlugin.cs" />

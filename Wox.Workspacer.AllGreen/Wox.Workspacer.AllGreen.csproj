@@ -57,6 +57,7 @@
     <Compile Include="Helper\ApplicationStarter.cs" />
     <Compile Include="Helper\WorkspacerContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test\Basic_commands_test.cs" />
     <Compile Include="Test\Prepare_common_context.cs" />
   </ItemGroup>
   <ItemGroup>

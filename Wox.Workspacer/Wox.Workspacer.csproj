@@ -56,6 +56,7 @@
     <Compile Include="Core\Service\IWorkspacerService.cs" />
     <Compile Include="Core\Service\IWoxContextService.cs" />
     <Compile Include="Core\Service\IWoxResultFinder.cs" />
+    <Compile Include="DomainModel\WorkspacerConfiguration.cs" />
     <Compile Include="DomainModel\WoxQuery.cs" />
     <Compile Include="DomainModel\WoxResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

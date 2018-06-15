@@ -1,0 +1,9 @@
+﻿<NUnitProject>
+  <Settings activeconfig="NUnitDebug" />
+  <Config name="NUnitDebug" appbase="Wox.Workspacer.AllGreen\bin\Debug" configfile="Strator.Iris.Test.NUnit.dll.config" binpathtype="Auto">
+    <assembly path="Wox.Workspacer.AllGreen.dll" />
+  </Config>
+  <Config name="NUnitRelease" appbase="Wox.Workspacer.AllGreen\bin\Release" configfile="Strator.Iris.Test.NUnit.dll.config" binpathtype="Auto">
+    <assembly path="Wox.Workspacer.AllGreen.dll" />
+  </Config>
+</NUnitProject>

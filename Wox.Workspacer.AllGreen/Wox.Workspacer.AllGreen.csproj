@@ -59,6 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\Basic_commands_test.cs" />
     <Compile Include="Test\Prepare_common_context.cs" />
+    <Compile Include="Test\View_and_change_configuration_test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

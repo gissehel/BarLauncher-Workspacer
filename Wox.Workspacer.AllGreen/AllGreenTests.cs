@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Wox.Workspacer.AllGreen.Helper;
+using Wox.Workspacer.Tool;
 
 namespace Wox.Workspacer.AllGreen
 {
@@ -51,7 +52,7 @@ namespace Wox.Workspacer.AllGreen
             }
             else
             {
-                Assert.Fail(string.Format("Don't know [{0}] as a test name !", name));
+                Assert.Fail("Don't know [{0}] as a test name !".FormatWith(name));
             }
         }
 

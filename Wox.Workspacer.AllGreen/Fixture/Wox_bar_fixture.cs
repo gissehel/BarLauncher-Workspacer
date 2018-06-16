@@ -2,6 +2,7 @@
 using System.Linq;
 using Wox.Workspacer.AllGreen.Helper;
 using Wox.Workspacer.DomainModel;
+using Wox.Workspacer.Tool;
 
 namespace Wox.Workspacer.AllGreen.Fixture
 {
@@ -41,7 +42,7 @@ namespace Wox.Workspacer.AllGreen.Fixture
             var resultCount = Context.ApplicationStarter.WoxContextService.Results.Count();
             if (lineIndex < 0 || lineIndex >= resultCount)
             {
-                throw new AllGreenException(string.Format("Invalid line number [{0}], there are [{1}] result currently shown.", lineNumber, resultCount));
+                throw new AllGreenException("Invalid line number [{0}], there are [{1}] result currently shown.".FormatWith(lineNumber, resultCount));
             }
             return Context.ApplicationStarter.WoxContextService.Results.ElementAt(lineIndex);
         }
@@ -58,7 +59,7 @@ namespace Wox.Workspacer.AllGreen.Fixture
             var lineIndex = lineNumber - 1;
             if (lineIndex < 0 || lineIndex >= Context.ApplicationStarter.WoxContextService.Results.Count())
             {
-                throw new AllGreenException(string.Format("Line number [{0}] is invalid, there is currently only [{1}] results shown", lineNumber, Context.ApplicationStarter.WoxContextService.Results.Count()));
+                throw new AllGreenException("Line number [{0}] is invalid, there is currently only [{1}] results shown".FormatWith(lineNumber, Context.ApplicationStarter.WoxContextService.Results.Count()));
             }
 
             var result = Context.ApplicationStarter.WoxContextService.Results.ElementAt(lineIndex);

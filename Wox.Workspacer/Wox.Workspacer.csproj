@@ -72,6 +72,7 @@
     <Compile Include="Service\WorkspacerService.cs" />
     <Compile Include="Service\WoxContextService.cs" />
     <Compile Include="..\Version.cs" />
+    <Compile Include="Tool\Extensions.cs" />
     <Compile Include="WorkspacerPlugin.cs" />
   </ItemGroup>
   <ItemGroup>

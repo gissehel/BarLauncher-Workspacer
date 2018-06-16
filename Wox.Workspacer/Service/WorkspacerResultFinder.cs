@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Wox.Workspacer.Core.Service;
 using Wox.Workspacer.DomainModel;
+using Wox.Workspacer.Tool;
 
 namespace Wox.Workspacer.Service
 {
@@ -44,7 +45,7 @@ namespace Wox.Workspacer.Service
                 new KeyValuePair<Func<WorkspacerConfiguration, string>, Action<WorkspacerConfiguration, string>>
                 (
                     new Func<WorkspacerConfiguration, string>(c=>c.Launcher),
-                    new Action<WorkspacerConfiguration, string>((c,v)=>{c.Launcher = v; WorkspacerService.SaveConfiguration(c); })
+                    new Action<WorkspacerConfiguration, string>((c,v)=>c.Launcher = v)
                 )
             },
         });
@@ -80,17 +81,36 @@ namespace Wox.Workspacer.Service
 
                 if (configValue == null)
                 {
-                    yield return GetCompletionResultFinal("work config " + configName, string.Format("Select {0}={1}", configName, reader(configuration)), () => string.Format("config {0}={1}", configName, reader(configuration)));
+                    yield return GetCompletionResultFinal
+                    (
+                        "work config {0}".FormatWith(configName),
+                        "Select {0}={1}".FormatWith(configName, reader(configuration)),
+                        () => "config {0}={1}".FormatWith(configName, reader(configuration))
+                    );
                 }
                 else
                 {
                     if (reader(configuration) == configValue)
                     {
-                        yield return GetCompletionResultFinal("work config " + configName, string.Format("The current value for {0} is {1}", configName, reader(configuration)), () => string.Format("config {0}={1}", configName, reader(configuration)));
+                        yield return GetCompletionResultFinal
+                        (
+                            "work config {0}".FormatWith(configName),
+                            "The current value for {0} is {1}".FormatWith(configName, reader(configuration)),
+                            () => "config {0}={1}".FormatWith(configName, reader(configuration))
+                        );
                     }
                     else
                     {
-                        yield return GetActionResult("work config " + configName, string.Format("Set the value for {0} to {1}", configName, configValue), () => writer(configuration, configValue));
+                        yield return GetActionResult
+                        (
+                            "work config {0}".FormatWith(configName),
+                            "Set the value for {0} to {1}".FormatWith(configName, configValue),
+                            () =>
+                            {
+                                writer(configuration, configValue);
+                                WorkspacerService.SaveConfiguration(configuration);
+                            }
+                        );
                     }
                 }
             }
@@ -102,13 +122,23 @@ namespace Wox.Workspacer.Service
                     {
                         if (PatternMatch(configName, configNameReference))
                         {
-                            yield return GetCompletionResult("work config " + configNameReference, string.Format("{0}={1}", configNameReference, ConfigNames[configNameReference].Key(configuration)), () => "config " + configNameReference);
+                            yield return GetCompletionResult
+                            (
+                                "work config {0}".FormatWith(configNameReference),
+                                "{0}={1}".FormatWith(configNameReference, ConfigNames[configNameReference].Key(configuration)),
+                                () => "config {0}".FormatWith(configNameReference)
+                            );
                         }
                     }
                 }
                 else
                 {
-                    yield return GetCompletionResultFinal("Configuration error", string.Format("There is no configuration item named {0}", configName), () => "config " + configName);
+                    yield return GetCompletionResultFinal
+                    (
+                        "Configuration error",
+                        "There is no configuration item named {0}".FormatWith(configName),
+                        () => "config {0}".FormatWith(configName)
+                    );
                 }
             }
         }

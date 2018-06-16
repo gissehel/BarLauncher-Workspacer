@@ -5,6 +5,7 @@ using AllGreen.Lib.DomainModel;
 using AllGreen.Lib.DomainModel.ScriptResult;
 using System.IO;
 using System.Text;
+using Wox.Workspacer.Tool;
 
 namespace Wox.Workspacer.AllGreen.Helper
 {
@@ -24,7 +25,7 @@ namespace Wox.Workspacer.AllGreen.Helper
         public void OnTestStop()
         {
             var testScriptResult = TestScriptResult as TestScriptResult<WorkspacerContext>;
-            var path = Path.Combine(ApplicationStarter.TestPath, string.Format("{0}.agout", testScriptResult.TestScript.Name));
+            var path = Path.Combine(ApplicationStarter.TestPath, "{0}.agout".FormatWith(testScriptResult.TestScript.Name));
             using (var writer = new StreamWriter(path, false, new UTF8Encoding(false)))
             {
                 writer.Write(testScriptResult.GetPipedName(PipedNameOptions.Canonical));

@@ -7,6 +7,7 @@ using System.Text;
 using Wox.Workspacer.Core.Service;
 using Wox.Workspacer.Mock.Service;
 using Wox.Workspacer.Service;
+using Wox.Workspacer.Tool;
 
 namespace Wox.Workspacer.AllGreen.Helper
 {
@@ -65,7 +66,7 @@ namespace Wox.Workspacer.AllGreen.Helper
         private string GetApplicationDataPath()
         {
             var thisAssemblyDirectory = GetThisAssemblyDirectory();
-            var path = Path.Combine(Path.Combine(thisAssemblyDirectory, "AllGreen"), string.Format("AG_{0:yyyyMMdd-HHmmss-fff}_{1}", DateTime.Now, TestName));
+            var path = Path.Combine(Path.Combine(thisAssemblyDirectory, "AllGreen"), "AG_{0:yyyyMMdd-HHmmss-fff}_{1}".FormatWith(DateTime.Now, TestName));
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);

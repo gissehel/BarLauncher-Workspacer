@@ -1,5 +1,6 @@
 ﻿using System.Data.SQLite;
 using Wox.Workspacer.Core.Service;
+using Wox.Workspacer.Tool;
 
 namespace Wox.Workspacer.Service
 {
@@ -19,7 +20,7 @@ namespace Wox.Workspacer.Service
         public void Init()
         {
             DataPath = SystemService.ApplicationDataPath;
-            SQLiteConnection = new SQLiteConnection(string.Format(@"Data Source={0}\Workspacer.sqlite;Version=3;", DataPath));
+            SQLiteConnection = new SQLiteConnection(@"Data Source={0}\Workspacer.sqlite;Version=3;".FormatWith(DataPath));
             SQLiteConnection.Open();
         }
 

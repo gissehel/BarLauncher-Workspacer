@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using Wox.Workspacer.Core.Service;
+using Wox.Workspacer.Tool;
 
 namespace Wox.Workspacer.Service
 {
@@ -19,7 +20,7 @@ namespace Wox.Workspacer.Service
 
         public string GetExportPath() => ApplicationDataPath;
 
-        public string GetUID() => string.Format("{0:yyyyMMdd-HHmmss-fff}", DateTime.Now);
+        public string GetUID() => "{0:yyyyMMdd-HHmmss-fff}".FormatWith(DateTime.Now);
 
         private string GetApplicationDataPath()
         {

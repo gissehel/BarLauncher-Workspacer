@@ -22,6 +22,19 @@ namespace Wox.Workspacer.Core.Service
 
         IDataAccessQueryWithResult<T> Returning<T>(Func<T> entityFactory);
 
+        IDataAccessQueryWithIndexedResult ReturningWithIndex();
+
+        int Execute();
+    }
+
+    public interface IDataAccessQueryWithIndexedResult
+    {
+        IDataAccessQueryWithIndexedResult Reading(string name, Action<int, string> actionForString);
+
+        IDataAccessQueryWithIndexedResult Reading(string name, Action<int, long> actionForLong);
+
+        IDataAccessQueryWithIndexedResult Reading(string name, Action<int, bool> actionForBool);
+
         int Execute();
     }
 

@@ -36,6 +36,11 @@ namespace Wox.Workspacer.Service
             return new DataAccessQueryWithResult<T>(this, entityFactory);
         }
 
+        public IDataAccessQueryWithIndexedResult ReturningWithIndex()
+        {
+            return new DataAccessQueryWithIndexedResult(this);
+        }
+
         public IDataAccessQuery WithParameter(string name, string value)
         {
             ParameterActions.Add(p => p.Add("@" + name, System.Data.DbType.String).Value = value);

@@ -6,7 +6,7 @@ using Wox.Workspacer.DomainModel;
 
 namespace Wox.Workspacer.Core.Service
 {
-    public interface IWorkspacerService
+    public interface IWorkspacerConfigurationRepository
     {
         void Init();
 

@@ -20,8 +20,13 @@ namespace Wox.Workspacer
             IWoxContextService woxContextService = new WoxContextService(context);
             QueryService = new QueryService();
             ResultService = new ResultService();
-            var workspacerService = new WorkspacerService();
+            var systemService = new SystemService("Wox.Workspacer");
+            var dataAccessService = new DataAccessService(systemService);
+            var workspacerConfigurationRepository = new WorkspacerConfigurationRepository(dataAccessService);
+            var workspacerService = new WorkspacerService(dataAccessService, workspacerConfigurationRepository);
             WorkspacerResultFinder = new WorkspacerResultFinder(woxContextService, workspacerService);
+
+            workspacerService.Init();
         }
 
         public List<Result> Query(Query query)

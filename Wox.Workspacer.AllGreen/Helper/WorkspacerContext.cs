@@ -27,7 +27,7 @@ namespace Wox.Workspacer.AllGreen.Helper
             var path = Path.Combine(ApplicationStarter.TestPath, string.Format("{0}.agout", testScriptResult.TestScript.Name));
             using (var writer = new StreamWriter(path, false, new UTF8Encoding(false)))
             {
-                writer.Write(testScriptResult.GetPipedName(PipedNameOptions.Detailled));
+                writer.Write(testScriptResult.GetPipedName(PipedNameOptions.Canonical));
             }
         }
     }

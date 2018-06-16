@@ -97,6 +97,12 @@ namespace Wox.Workspacer.AllGreen.Test
             .EndUsing()
 
             .Using<Wox_bar_fixture>()
+            .DoAction(f => f.Select_line(1))
+            .DoReject(f => f.Wox_is_displayed())
+            .DoAction(f => f.Display_wox())
+            .EndUsing()
+
+            .Using<Wox_bar_fixture>()
             .DoAction(f => f.Write_query("work config OpenDirComman"))
             .DoCheck(f => f.The_current_query_is(), "work config OpenDirComman")
             .EndUsing()

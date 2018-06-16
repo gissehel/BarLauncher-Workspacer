@@ -10,6 +10,7 @@ namespace Wox.Workspacer.Service
     {
         private IWoxContextService WoxContextService { get; set; }
         private IWorkspacerService WorkspacerService { get; set; }
+
         public WorkspacerResultFinder(IWoxContextService woxContextService, IWorkspacerService workspacerService)
         {
             WoxContextService = woxContextService;
@@ -34,17 +35,19 @@ namespace Wox.Workspacer.Service
             }
         }
 
-        private Dictionary<string, KeyValuePair<Func<WorkspacerConfiguration, string>, Action<WorkspacerConfiguration, string>>> _configNames = new Dictionary<string, KeyValuePair<Func<WorkspacerConfiguration, string>, Action<WorkspacerConfiguration, string>>>()
+        private Dictionary<string, KeyValuePair<Func<WorkspacerConfiguration, string>, Action<WorkspacerConfiguration, string>>> _configNames = null;
+
+        private Dictionary<string, KeyValuePair<Func<WorkspacerConfiguration, string>, Action<WorkspacerConfiguration, string>>> ConfigNames => _configNames ?? (_configNames = new Dictionary<string, KeyValuePair<Func<WorkspacerConfiguration, string>, Action<WorkspacerConfiguration, string>>>()
         {
             {
                 "OpenDirCommand",
                 new KeyValuePair<Func<WorkspacerConfiguration, string>, Action<WorkspacerConfiguration, string>>
                 (
                     new Func<WorkspacerConfiguration, string>(c=>c.Launcher),
-                    new Action<WorkspacerConfiguration, string>((c,v)=>{c.Launcher = v; })
+                    new Action<WorkspacerConfiguration, string>((c,v)=>{c.Launcher = v; WorkspacerService.SaveConfiguration(c); })
                 )
             },
-        };
+        });
 
         private IEnumerable<WoxResult> GetConfig(WoxQuery query)
         {
@@ -65,33 +68,41 @@ namespace Wox.Workspacer.Service
             if (configName.Contains("="))
             {
                 var position = configName.IndexOf("=");
+                configName = string.Join(" ", query.SearchTerms.Skip(1).ToArray());
                 configValue = configName.Substring(position + 1, configName.Length - position - 1);
-                configName = configName.Substring(0, position - 1);
+                configName = configName.Substring(0, position);
             }
 
-            if (_configNames.ContainsKey(configName))
+            if (ConfigNames.ContainsKey(configName))
             {
-                var reader = _configNames[configName].Key;
-                var writer = _configNames[configName].Value;
+                var reader = ConfigNames[configName].Key;
+                var writer = ConfigNames[configName].Value;
 
                 if (configValue == null)
                 {
-                    yield return GetCompletionResult("work config " + configName, string.Format("Select {0}={1}", configName, reader(configuration)), () => string.Format("config {0}={1}", configName, reader(configuration)));
+                    yield return GetCompletionResultFinal("work config " + configName, string.Format("Select {0}={1}", configName, reader(configuration)), () => string.Format("config {0}={1}", configName, reader(configuration)));
                 }
                 else
                 {
-                    yield return GetActionResult("work config " + configName, string.Format("Set the value for {0} to {1}", configName, reader(configuration)), () => writer(configuration, configValue));
+                    if (reader(configuration) == configValue)
+                    {
+                        yield return GetCompletionResultFinal("work config " + configName, string.Format("The current value for {0} is {1}", configName, reader(configuration)), () => string.Format("config {0}={1}", configName, reader(configuration)));
+                    }
+                    else
+                    {
+                        yield return GetActionResult("work config " + configName, string.Format("Set the value for {0} to {1}", configName, configValue), () => writer(configuration, configValue));
+                    }
                 }
             }
             else
             {
                 if (configValue == null)
                 {
-                    foreach (var configNameReference in _configNames.Keys.OrderBy(k => k))
+                    foreach (var configNameReference in ConfigNames.Keys.OrderBy(k => k))
                     {
                         if (PatternMatch(configName, configNameReference))
                         {
-                            yield return GetCompletionResult("work config " + configNameReference, string.Format("{0}={1}", configNameReference, _configNames[configNameReference].Key(configuration)), () => "config " + configNameReference);
+                            yield return GetCompletionResult("work config " + configNameReference, string.Format("{0}={1}", configNameReference, ConfigNames[configNameReference].Key(configuration)), () => "config " + configNameReference);
                         }
                     }
                 }
@@ -102,8 +113,7 @@ namespace Wox.Workspacer.Service
             }
         }
 
-
-        private bool PatternMatch(string pattern, string command) => string.IsNullOrEmpty(pattern) || command.Contains(pattern);
+        private bool PatternMatch(string pattern, string command) => string.IsNullOrEmpty(pattern) || command.ToLower().Contains(pattern.ToLower());
 
         private WoxResult _helpList = null;
         private WoxResult _helpConfig = null;

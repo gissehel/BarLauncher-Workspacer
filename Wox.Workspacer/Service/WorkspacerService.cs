@@ -1,22 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Wox.Workspacer.Core.Service;
+﻿using Wox.Workspacer.Core.Service;
 using Wox.Workspacer.DomainModel;
 
 namespace Wox.Workspacer.Service
 {
     public class WorkspacerService : IWorkspacerService
     {
-        public WorkspacerConfiguration GetConfiguration()
+        public WorkspacerConfiguration GetConfiguration() => WorkspacerConfigurationRepository.GetConfiguration();
+
+        private IDataAccessService DataAccessService { get; set; }
+        private IWorkspacerConfigurationRepository WorkspacerConfigurationRepository { get; set; }
+
+        public WorkspacerService(IDataAccessService dataAccessService, IWorkspacerConfigurationRepository workspacerConfigurationRepository)
         {
-            return new WorkspacerConfiguration { Launcher = "%1" };
+            DataAccessService = dataAccessService;
+            WorkspacerConfigurationRepository = workspacerConfigurationRepository;
         }
 
         public void Init()
         {
-
+            DataAccessService.Init();
+            WorkspacerConfigurationRepository.Init();
         }
+
+        public void SaveConfiguration(WorkspacerConfiguration configuration) => WorkspacerConfigurationRepository.SaveConfiguration(configuration);
     }
 }

@@ -23,7 +23,8 @@ namespace Wox.Workspacer
             var systemService = new SystemService("Wox.Workspacer");
             var dataAccessService = new DataAccessService(systemService);
             var workspacerConfigurationRepository = new WorkspacerConfigurationRepository(dataAccessService);
-            var workspacerService = new WorkspacerService(dataAccessService, workspacerConfigurationRepository);
+            var workspacerRepoRepository = new WorkspacerRepoRepository(dataAccessService);
+            var workspacerService = new WorkspacerService(dataAccessService, workspacerConfigurationRepository, workspacerRepoRepository, systemService);
             WorkspacerResultFinder = new WorkspacerResultFinder(woxContextService, workspacerService);
 
             workspacerService.Init();

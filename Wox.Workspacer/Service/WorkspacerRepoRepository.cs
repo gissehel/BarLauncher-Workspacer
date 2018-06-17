@@ -26,6 +26,7 @@ namespace Wox.Workspacer.Service
             string path = null;
             DataAccessService
                 .GetQuery("select path from repo where name=@name")
+                .WithParameter("name", name)
                 .ReturningWithIndex()
                 .Reading("path", (index, value) => path = value)
                 .Execute()

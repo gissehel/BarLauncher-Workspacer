@@ -35,7 +35,8 @@ namespace Wox.Workspacer.AllGreen.Helper
             SystemServiceMock systemService = new SystemServiceMock();
             IDataAccessService dataAccessService = new DataAccessService(systemService);
             IWorkspacerConfigurationRepository workspacerConfigurationRepository = new WorkspacerConfigurationRepository(dataAccessService);
-            IWorkspacerService workspacerService = new WorkspacerService(dataAccessService, workspacerConfigurationRepository);
+            IWorkspacerRepoRepository workspacerRepoRepository = new WorkspacerRepoRepository(dataAccessService);
+            IWorkspacerService workspacerService = new WorkspacerService(dataAccessService, workspacerConfigurationRepository, workspacerRepoRepository, systemService);
             IWoxResultFinder woxWebAppResultFinder = new WorkspacerResultFinder(woxContextService, workspacerService);
 
             systemService.ApplicationDataPath = GetApplicationDataPath();

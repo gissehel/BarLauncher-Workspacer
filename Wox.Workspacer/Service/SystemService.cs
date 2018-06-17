@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using Wox.Workspacer.Core.Service;
 using Wox.Workspacer.Tool;
 
@@ -17,6 +19,8 @@ namespace Wox.Workspacer.Service
         }
 
         public string ApplicationDataPath => _applicationDataPath ?? (_applicationDataPath = GetApplicationDataPath());
+
+        public DateTime Now => DateTime.Now;
 
         public string GetExportPath() => ApplicationDataPath;
 
@@ -55,6 +59,28 @@ namespace Wox.Workspacer.Service
             catch (Exception)
             {
                 // TODO : Find something usefull here...
+            }
+        }
+
+        public void CreateDirectoryIfNotExists(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
+
+        public IEnumerable<string> GetDirectories(string name)
+        {
+            var directories = Directory.GetDirectories(name);
+            var length = name.Length;
+            if (!name.EndsWith("\\"))
+            {
+                length += 1;
+            }
+            foreach (var directory in directories.OrderBy(x => x))
+            {
+                yield return directory.Substring(length);
             }
         }
     }

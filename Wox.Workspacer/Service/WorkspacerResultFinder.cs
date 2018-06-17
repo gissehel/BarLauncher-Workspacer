@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Wox.Workspacer.Core.Service;
 using Wox.Workspacer.DomainModel;
@@ -22,8 +23,20 @@ namespace Wox.Workspacer.Service
         {
             switch (query.FirstTerm)
             {
+                case "cr":
+                    return GetCreate(query);
+
+                case "cd":
+                    return GetChangeDir(query);
+
                 case "config":
                     return GetConfig(query);
+
+                case "list":
+                    return GetList(query);
+
+                case "name":
+                    return GetName(query);
 
                 default:
                     var commands = GetCommandHelp(query.FirstTerm);
@@ -35,6 +48,266 @@ namespace Wox.Workspacer.Service
                     return commands;
             }
         }
+
+        private IEnumerable<WoxResult> GetChangeDir(WoxQuery query)
+        {
+            string name = null;
+
+            if (query.SearchTerms.Length > 1)
+            {
+                name = query.SearchTerms[1];
+            }
+            else
+            {
+                name = "";
+            }
+
+            string value = null;
+
+            if (query.SearchTerms.Length > 2)
+            {
+                value = GetAllSearchTermsStarting(query, 2);
+            }
+
+            string actualPath = WorkspacerService.GetPathByName(name);
+            if (value == null && actualPath == null)
+            {
+                bool foundRepo = false;
+                var repos = WorkspacerService.GetRepos();
+                foreach (var repo in repos)
+                {
+                    if (PatternMatch(name, repo.Name))
+                    {
+                        foundRepo = true;
+                        yield return GetCompletionResult
+                        (
+                            "work cd {0} [PATTERN] [PATTERN]".FormatWith(repo.Name),
+                            "Search the {0} repo".FormatWith(repo.Name),
+                            () => "cd {0}".FormatWith(repo.Name)
+                        );
+                    }
+                }
+                if (!foundRepo)
+                {
+                    if (!string.IsNullOrEmpty(name))
+                    {
+                        yield return HelpCreate;
+                    }
+                }
+            }
+            else
+            {
+                if (actualPath != null)
+                {
+                    query.SearchTerms.Skip(2);
+                    var workspaces = WorkspacerService.GetWorspaces(actualPath);
+                    foreach (var workspace in workspaces)
+                    {
+                        if (query.SearchTerms.Skip(2).All(term => PatternMatch(term, workspace)))
+                        {
+                            yield return GetActionResult
+                            (
+                                "work cd {0} {1}".FormatWith(name, workspace),
+                                "Go to {1}".FormatWith(name, workspace),
+                                () => WorkspacerService.OpenDir(Path.Combine(actualPath, workspace))
+                            );
+                        }
+                    }
+                }
+                else
+                {
+                    yield return HelpChangeDir;
+                }
+            }
+        }
+
+        private IEnumerable<WoxResult> GetCreate(WoxQuery query)
+        {
+            string name = null;
+
+            if (query.SearchTerms.Length > 1)
+            {
+                name = query.SearchTerms[1];
+            }
+            else
+            {
+                name = "";
+            }
+
+            string value = null;
+
+            if (query.SearchTerms.Length > 2)
+            {
+                value = GetAllSearchTermsStarting(query, 2);
+            }
+
+            if (value == null)
+            {
+                bool foundRepo = false;
+                var repos = WorkspacerService.GetRepos();
+                foreach (var repo in repos)
+                {
+                    if (PatternMatch(name, repo.Name))
+                    {
+                        foundRepo = true;
+                        yield return GetCompletionResult
+                        (
+                            "work cr {0}".FormatWith(repo.Name),
+                            "Create a new workspace in the {0} repo".FormatWith(repo.Name),
+                            () => "cr {0}".FormatWith(repo.Name)
+                        );
+                    }
+                }
+                if (!foundRepo)
+                {
+                    if (!string.IsNullOrEmpty(name))
+                    {
+                        yield return HelpCreate;
+                    }
+                }
+            }
+            else
+            {
+                string actualPath = WorkspacerService.GetPathByName(name);
+                if (actualPath != null)
+                {
+                    yield return GetActionResult
+                    (
+                        "work cr {0} {1}".FormatWith(name, value),
+                        "Create new workspace \"{1}\" in repo {0}".FormatWith(name, value),
+                        () => WorkspacerService.CreateDir(actualPath, value)
+                    );
+                }
+                else
+                {
+                    yield return HelpCreate;
+                }
+            }
+        }
+
+        private IEnumerable<WoxResult> GetName(WoxQuery query)
+        {
+            string name = null;
+
+            if (query.SearchTerms.Length > 1)
+            {
+                name = query.SearchTerms[1];
+            }
+            else
+            {
+                name = "";
+            }
+
+            string value = null;
+
+            if (query.SearchTerms.Length > 2)
+            {
+                value = GetAllSearchTermsStarting(query, 2);
+            }
+
+            if (value == null)
+            {
+                bool foundRepo = false;
+                var repos = WorkspacerService.GetRepos();
+                foreach (var repo in repos)
+                {
+                    if (PatternMatch(name, repo.Name))
+                    {
+                        foundRepo = true;
+                        yield return GetCompletionResult
+                        (
+                            "work name {0} {1}".FormatWith(repo.Name, repo.Path),
+                            "The current Path for name {0} is {1}".FormatWith(repo.Name, repo.Path),
+                            () => "name {0} {1}".FormatWith(repo.Name, repo.Path)
+                        );
+                    }
+                }
+                if (!foundRepo)
+                {
+                    if (!string.IsNullOrEmpty(name))
+                    {
+                        yield return GetCompletionResult
+                        (
+                            "work name {0}".FormatWith(name),
+                            "There is no repo named {0} yet".FormatWith(name),
+                            () => "name {0}".FormatWith(name)
+                        );
+                    }
+                }
+            }
+            else
+            {
+                string actualPath = WorkspacerService.GetPathByName(name);
+                if (actualPath != value)
+                {
+                    if (actualPath == null)
+                    {
+                        yield return GetActionResult
+                        (
+                            "work name {0} {1}".FormatWith(name, value),
+                            "Set repo name {0} to path {1}".FormatWith(name, value),
+                            () =>
+                            {
+                                WorkspacerService.SetPathByName(name, value);
+                            }
+                        );
+                    }
+                    else
+                    {
+                        yield return GetActionResult
+                        (
+                            "work name {0} {1}".FormatWith(name, value),
+                            "Replace repo name {0} to path {1} (actual value is {2})".FormatWith(name, value, actualPath),
+                            () =>
+                            {
+                                WorkspacerService.SetPathByName(name, value);
+                            }
+                        );
+                    }
+                }
+                else
+                {
+                    yield return GetCompletionResultFinal
+                    (
+                        "work name {0} {1}".FormatWith(name, value),
+                        "The current name {0} points to path {1}".FormatWith(name, value),
+                        () => "name {0} {1}".FormatWith(name, value)
+                    );
+                }
+            }
+        }
+
+        private IEnumerable<WoxResult> GetList(WoxQuery query)
+        {
+            string name = null;
+
+            if (query.SearchTerms.Length > 1)
+            {
+                name = query.SearchTerms[1];
+            }
+            else
+            {
+                name = "";
+            }
+            var repos = WorkspacerService.GetRepos();
+            foreach (var repo in repos)
+            {
+                if (PatternMatch(name, repo.Name))
+                {
+                    yield return GetActionResult
+                    (
+                        "work list {0}".FormatWith(repo.Name),
+                        "Go to {0}".FormatWith(repo.Path),
+                        () =>
+                        {
+                            WorkspacerService.OpenDir(repo.Path);
+                        }
+                    );
+                }
+            }
+        }
+
+        private string GetAllSearchTermsStarting(WoxQuery query, int index) => string.Join(" ", query.SearchTerms.Skip(index).ToArray());
 
         private Dictionary<string, KeyValuePair<Func<WorkspacerConfiguration, string>, Action<WorkspacerConfiguration, string>>> _configNames = null;
 
@@ -69,7 +342,7 @@ namespace Wox.Workspacer.Service
             if (configName.Contains("="))
             {
                 var position = configName.IndexOf("=");
-                configName = string.Join(" ", query.SearchTerms.Skip(1).ToArray());
+                configName = GetAllSearchTermsStarting(query, 1);
                 configValue = configName.Substring(position + 1, configName.Length - position - 1);
                 configName = configName.Substring(0, position);
             }
@@ -175,7 +448,7 @@ namespace Wox.Workspacer.Service
             Action = () =>
             {
                 action();
-                WoxContextService.ChangeQuery("");
+                // WoxContextService.ChangeQuery("");
             },
             ShouldClose = true,
         };

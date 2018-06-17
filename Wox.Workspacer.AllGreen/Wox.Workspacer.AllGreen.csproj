@@ -52,12 +52,17 @@
   <ItemGroup>
     <Compile Include="AllGreenTests.cs" />
     <Compile Include="Fixture\Command_line_started_fixture.cs" />
+    <Compile Include="Fixture\System_fixture.cs" />
+    <Compile Include="Fixture\System_command_line_started_fixture.cs" />
     <Compile Include="Fixture\Wox_bar_fixture.cs" />
     <Compile Include="Fixture\Wox_results_fixture.cs" />
     <Compile Include="Helper\ApplicationStarter.cs" />
     <Compile Include="Helper\WorkspacerContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\Basic_commands_test.cs" />
+    <Compile Include="Test\Create_and_view_repo_test.cs" />
+    <Compile Include="Test\Create_workspace_test.cs" />
+    <Compile Include="Test\Go_to_workspace.cs" />
     <Compile Include="Test\Prepare_common_context.cs" />
     <Compile Include="Test\View_and_change_configuration_test.cs" />
   </ItemGroup>

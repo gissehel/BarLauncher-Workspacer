@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Wox.Workspacer.DomainModel;
 
 namespace Wox.Workspacer.Core.Service
@@ -13,5 +10,17 @@ namespace Wox.Workspacer.Core.Service
         WorkspacerConfiguration GetConfiguration();
 
         void SaveConfiguration(WorkspacerConfiguration configuration);
+
+        List<WorkspacerRepo> GetRepos();
+
+        string GetPathByName(string name);
+
+        void SetPathByName(string name, string path);
+
+        void OpenDir(string path);
+
+        string CreateDir(string repoPath, string value);
+
+        IEnumerable<string> GetWorspaces(string actualPath);
     }
 }

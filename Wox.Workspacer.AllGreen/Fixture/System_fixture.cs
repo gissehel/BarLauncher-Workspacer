@@ -1,9 +1,6 @@
 ﻿using AllGreen.Lib;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using Wox.Workspacer.AllGreen.Helper;
 using Wox.Workspacer.Tool;
 

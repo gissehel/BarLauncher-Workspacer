@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Wox.Plugin;
 using Wox.Workspacer.Core.Service;
 using Wox.Workspacer.Service;

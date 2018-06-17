@@ -1,8 +1,5 @@
 ﻿using AllGreen.Lib;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Wox.Workspacer.AllGreen.Helper;
 
 namespace Wox.Workspacer.AllGreen.Fixture

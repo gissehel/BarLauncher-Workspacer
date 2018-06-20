@@ -106,5 +106,28 @@ namespace Wox.Workspacer.Service
         {
             return SystemService.GetDirectories(actualPath).OrderBy(x => x);
         }
+
+        public void Archive(string actualPath, string workspace)
+        {
+            string fullWorkspacePath = Path.Combine(actualPath, workspace);
+            if (SystemService.DirectoryExists(fullWorkspacePath))
+            {
+                string archiveDirectory = Path.Combine(actualPath, "0__ARCHIVE__");
+                string archivedWorkspace = Path.Combine(archiveDirectory, workspace);
+                SystemService.CreateDirectoryIfNotExists(archiveDirectory);
+
+                string archivedTargetWorkspace = archivedWorkspace;
+                long count = 0;
+                while (SystemService.DirectoryExists(archivedTargetWorkspace))
+                {
+                    count++;
+                    archivedTargetWorkspace = "{0}-{1:N5}".FormatWith(archivedWorkspace, count);
+                }
+
+                SystemService.MoveDirectory(fullWorkspacePath, archivedTargetWorkspace);
+
+                OpenDir(archivedTargetWorkspace);
+            }
+        }
     }
 }

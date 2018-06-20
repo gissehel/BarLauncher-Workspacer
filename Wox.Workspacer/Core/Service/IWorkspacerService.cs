@@ -22,5 +22,7 @@ namespace Wox.Workspacer.Core.Service
         string CreateDir(string repoPath, string value);
 
         IEnumerable<string> GetWorspaces(string actualPath);
+
+        void Archive(string actualPath, string workspace);
     }
 }

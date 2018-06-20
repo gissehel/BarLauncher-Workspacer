@@ -23,6 +23,9 @@ namespace Wox.Workspacer.Service
         {
             switch (query.FirstTerm)
             {
+                case "ar":
+                    return GetArchive(query);
+
                 case "cr":
                     return GetCreate(query);
 
@@ -46,6 +49,78 @@ namespace Wox.Workspacer.Service
                     }
                     // return GetList(query.SearchTerms);
                     return commands;
+            }
+        }
+
+        private IEnumerable<WoxResult> GetArchive(WoxQuery query)
+        {
+            string name = null;
+
+            if (query.SearchTerms.Length > 1)
+            {
+                name = query.SearchTerms[1];
+            }
+            else
+            {
+                name = "";
+            }
+
+            string value = null;
+
+            if (query.SearchTerms.Length > 2)
+            {
+                value = GetAllSearchTermsStarting(query, 2);
+            }
+
+            string actualPath = WorkspacerService.GetPathByName(name);
+            if (value == null && actualPath == null)
+            {
+                bool foundRepo = false;
+                var repos = WorkspacerService.GetRepos();
+                foreach (var repo in repos)
+                {
+                    if (PatternMatch(name, repo.Name))
+                    {
+                        foundRepo = true;
+                        yield return GetCompletionResult
+                        (
+                            "work ar {0} [PATTERN] [PATTERN]".FormatWith(repo.Name),
+                            "Archive a workspace in the {0} repo".FormatWith(repo.Name),
+                            () => "ar {0}".FormatWith(repo.Name)
+                        );
+                    }
+                }
+                if (!foundRepo)
+                {
+                    if (!string.IsNullOrEmpty(name))
+                    {
+                        yield return HelpArchive;
+                    }
+                }
+            }
+            else
+            {
+                if (actualPath != null)
+                {
+                    query.SearchTerms.Skip(2);
+                    var workspaces = WorkspacerService.GetWorspaces(actualPath);
+                    foreach (var workspace in workspaces)
+                    {
+                        if (query.SearchTerms.Skip(2).All(term => PatternMatch(term, workspace)))
+                        {
+                            yield return GetActionResult
+                            (
+                                "work ar {0} {1}".FormatWith(name, workspace),
+                                "Archive {1}".FormatWith(name, workspace),
+                                () => WorkspacerService.Archive(actualPath, workspace)
+                            );
+                        }
+                    }
+                }
+                else
+                {
+                    yield return HelpArchive;
+                }
             }
         }
 

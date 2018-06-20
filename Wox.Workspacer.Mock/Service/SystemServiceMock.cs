@@ -55,5 +55,17 @@ namespace Wox.Workspacer.Mock.Service
                 }
             }
         }
+
+        public void MoveDirectory(string source, string destination)
+        {
+            if (DirectoryExists(source))
+            {
+                if (!(DirectoryExists(destination)))
+                {
+                    _directories.Remove(source);
+                    _directories[destination] = true;
+                }
+            }
+        }
     }
 }

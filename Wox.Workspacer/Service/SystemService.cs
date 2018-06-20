@@ -62,6 +62,8 @@ namespace Wox.Workspacer.Service
             }
         }
 
+        public bool DirectoryExists(string path) => Directory.Exists(path);
+
         public void CreateDirectoryIfNotExists(string path)
         {
             if (!Directory.Exists(path))
@@ -81,6 +83,17 @@ namespace Wox.Workspacer.Service
             foreach (var directory in directories.OrderBy(x => x))
             {
                 yield return directory.Substring(length);
+            }
+        }
+
+        public void MoveDirectory(string source, string destination)
+        {
+            if (DirectoryExists(source))
+            {
+                if (!(DirectoryExists(destination)))
+                {
+                    Directory.Move(source, destination);
+                }
             }
         }
     }

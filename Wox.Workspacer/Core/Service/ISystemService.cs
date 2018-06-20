@@ -9,6 +9,8 @@ namespace Wox.Workspacer.Core.Service
 
         string ApplicationDataPath { get; }
 
+        bool DirectoryExists(string path);
+
         void CreateDirectoryIfNotExists(string path);
 
         string GetExportPath();
@@ -18,5 +20,7 @@ namespace Wox.Workspacer.Core.Service
         DateTime Now { get; }
 
         IEnumerable<string> GetDirectories(string name);
+
+        void MoveDirectory(string source, string destination);
     }
 }

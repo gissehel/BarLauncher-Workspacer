@@ -1,4 +1,5 @@
-﻿using Wox.EasyHelper;
+﻿using FluentDataAccess.Service;
+using Wox.EasyHelper;
 using Wox.Workspacer.Service;
 
 namespace Wox.Workspacer

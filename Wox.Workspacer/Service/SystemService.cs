@@ -22,6 +22,8 @@ namespace Wox.Workspacer.Service
 
         public DateTime Now => DateTime.Now;
 
+        public string DatabaseName => ApplicationName;
+
         public string GetExportPath() => ApplicationDataPath;
 
         public string GetUID() => "{0:yyyyMMdd-HHmmss-fff}".FormatWith(DateTime.Now);

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FluentDataAccess.Core.Service;
+using FluentDataAccess.Service;
+using System;
 using System.IO;
 using System.Reflection;
 using Wox.EasyHelper;

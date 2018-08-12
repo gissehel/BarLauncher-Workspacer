@@ -18,6 +18,8 @@ namespace Wox.Workspacer.Mock.Service
             set => _now = value;
         }
 
+        public string DatabaseName => "TestDB";
+
         public void StartCommandLine(string command, string arguments)
         {
             CommandLineStarted.Add(new KeyValuePair<string, string>(command, arguments));

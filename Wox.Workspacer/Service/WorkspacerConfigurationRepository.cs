@@ -1,4 +1,5 @@
-﻿using Wox.Workspacer.Core.Service;
+﻿using FluentDataAccess.Core.Service;
+using Wox.Workspacer.Core.Service;
 using Wox.Workspacer.DomainModel;
 
 namespace Wox.Workspacer.Service

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using FluentDataAccess.Core.Service;
+using System.Collections.Generic;
 using Wox.Workspacer.Core.Service;
 using Wox.Workspacer.DomainModel;
 

@@ -1,13 +1,14 @@
-﻿using System;
+﻿using FluentDataAccess.Core.Service;
+using System;
 using System.Collections.Generic;
 
 namespace Wox.Workspacer.Core.Service
 {
-    public interface ISystemService
+    public interface ISystemService : IDataAccessConfigurationService
     {
         void StartCommandLine(string command, string arguments);
 
-        string ApplicationDataPath { get; }
+        // string ApplicationDataPath { get; }
 
         bool DirectoryExists(string path);
 

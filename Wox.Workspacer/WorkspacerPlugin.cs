@@ -1,37 +1,21 @@
-﻿using System.Collections.Generic;
-using Wox.Plugin;
-using Wox.Workspacer.Core.Service;
+﻿using Wox.EasyHelper;
 using Wox.Workspacer.Service;
 
 namespace Wox.Workspacer
 {
-    public class WorkspacerPlugin : IPlugin
+    public class WorkspacerPlugin : PluginBase<WorkspacerResultFinder>
     {
-        private IQueryService QueryService { get; set; }
-        private IResultService ResultService { get; set; }
-
-        private IWoxResultFinder WorkspacerResultFinder { get; set; }
-
-        public void Init(PluginInitContext context)
+        public override WorkspacerResultFinder PrepareContext()
         {
-            IWoxContextService woxContextService = new WoxContextService(context);
-            QueryService = new QueryService();
-            ResultService = new ResultService();
             var systemService = new SystemService("Wox.Workspacer");
             var dataAccessService = new DataAccessService(systemService);
             var workspacerConfigurationRepository = new WorkspacerConfigurationRepository(dataAccessService);
             var workspacerRepoRepository = new WorkspacerRepoRepository(dataAccessService);
             var workspacerService = new WorkspacerService(dataAccessService, workspacerConfigurationRepository, workspacerRepoRepository, systemService);
-            WorkspacerResultFinder = new WorkspacerResultFinder(woxContextService, workspacerService);
+            var workspacerResultFinder = new WorkspacerResultFinder(WoxContextService, workspacerService);
 
             workspacerService.Init();
-        }
-
-        public List<Result> Query(Query query)
-        {
-            var woxQuery = QueryService.GetWoxQuery(query);
-            var results = WorkspacerResultFinder.GetResults(woxQuery);
-            return ResultService.MapResults(results);
+            return workspacerResultFinder;
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using Wox.EasyHelper;
+using Wox.EasyHelper.Core.Service;
+using Wox.EasyHelper.Test.Mock.Service;
 using Wox.Workspacer.Core.Service;
 using Wox.Workspacer.Mock.Service;
 using Wox.Workspacer.Service;
-using Wox.Workspacer.Tool;
 
 namespace Wox.Workspacer.AllGreen.Helper
 {

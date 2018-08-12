@@ -5,7 +5,7 @@ using AllGreen.Lib.DomainModel;
 using AllGreen.Lib.DomainModel.ScriptResult;
 using System.IO;
 using System.Text;
-using Wox.Workspacer.Tool;
+using Wox.EasyHelper;
 
 namespace Wox.Workspacer.AllGreen.Helper
 {

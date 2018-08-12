@@ -7,18 +7,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Wox.EasyHelper;
 using Wox.Workspacer.AllGreen.Helper;
-using Wox.Workspacer.Tool;
 
 namespace Wox.Workspacer.AllGreen
 {
-    [TestFixture]
     public class AllGreenTests
     {
         private ITestRunnerService _testRunnerService = null;
         private ITestRunnerService TestRunnerService => _testRunnerService ?? (_testRunnerService = new TestRunnerService());
 
-        private Dictionary<string, TestScript<WorkspacerContext>> GetTestScripts()
+        private static Dictionary<string, TestScript<WorkspacerContext>> GetTestScripts()
         {
             var testScripts = new Dictionary<string, TestScript<WorkspacerContext>>();
             var allRunnableTestScripts = Assembly
@@ -37,10 +36,10 @@ namespace Wox.Workspacer.AllGreen
             return testScripts;
         }
 
-        private Dictionary<string, TestScript<WorkspacerContext>> _testScripts = null;
-        private Dictionary<string, TestScript<WorkspacerContext>> TestScripts => _testScripts ?? (_testScripts = GetTestScripts());
+        private static Dictionary<string, TestScript<WorkspacerContext>> _testScripts = null;
+        private static Dictionary<string, TestScript<WorkspacerContext>> TestScripts => _testScripts ?? (_testScripts = GetTestScripts());
 
-        private IEnumerable<string> GetTestScriptNames() => TestScripts.Keys.OrderBy(name => name);
+        private static IEnumerable<string> GetTestScriptNames() => TestScripts.Keys.OrderBy(name => name);
 
         [TestCaseSource(nameof(GetTestScriptNames))]
         public void Run(string name)

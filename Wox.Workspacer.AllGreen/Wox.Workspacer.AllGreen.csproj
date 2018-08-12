@@ -1,88 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9156CA54-6ECB-4B6F-9004-295B209EF3EB}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wox.Workspacer.AllGreen</RootNamespace>
-    <AssemblyName>Wox.Workspacer.AllGreen</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <TargetFramework>net471</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="AllGreen.Lib, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AllGreen.Lib.1.0.0.1\lib\AllGreen.Lib.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework, Version=2.5.7.10213, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.2.5.7.10213\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.mocks, Version=2.5.7.10213, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.2.5.7.10213\lib\nunit.mocks.dll</HintPath>
-    </Reference>
-    <Reference Include="pnunit.framework, Version=1.0.3865.21394, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.2.5.7.10213\lib\pnunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="AllGreen.Lib" Version="1.0.1" />
+    <PackageReference Include="NUnit" Version="3.10.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
+    <PackageReference Include="Wox.EasyHelper" Version="1.0.2" />
+    <PackageReference Include="Wox.EasyHelper.Test.Mock" Version="1.0.2" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="AllGreenTests.cs" />
-    <Compile Include="Fixture\Command_line_started_fixture.cs" />
-    <Compile Include="Fixture\System_fixture.cs" />
-    <Compile Include="Fixture\System_command_line_started_fixture.cs" />
-    <Compile Include="Fixture\Wox_bar_fixture.cs" />
-    <Compile Include="Fixture\Wox_results_fixture.cs" />
-    <Compile Include="Helper\ApplicationStarter.cs" />
-    <Compile Include="Helper\WorkspacerContext.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Test\Archive_workspaces_test.cs" />
-    <Compile Include="Test\Basic_commands_test.cs" />
-    <Compile Include="Test\Create_and_view_repo_test.cs" />
-    <Compile Include="Test\Create_workspace_test.cs" />
-    <Compile Include="Test\Go_to_workspace.cs" />
-    <Compile Include="Test\Prepare_common_context.cs" />
-    <Compile Include="Test\View_and_change_configuration_test.cs" />
+    <ProjectReference Include="..\Wox.Workspacer.Mock\Wox.Workspacer.Mock.csproj" />
+    <ProjectReference Include="..\Wox.Workspacer\Wox.Workspacer.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Update="plugin.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Unitlib-64.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Wox.Workspacer.Mock\Wox.Workspacer.Mock.csproj">
-      <Project>{8cb4e218-e106-45d4-8fa9-53b268305c5f}</Project>
-      <Name>Wox.Workspacer.Mock</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Wox.Workspacer\Wox.Workspacer.csproj">
-      <Project>{f07168fb-ce98-4077-b2b1-d81eca88c0ce}</Project>
-      <Name>Wox.Workspacer</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

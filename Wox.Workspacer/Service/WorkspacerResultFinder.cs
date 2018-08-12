@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Wox.EasyHelper;
+using Wox.EasyHelper.Core.Service;
 using Wox.Workspacer.Core.Service;
 using Wox.Workspacer.DomainModel;
-using Wox.Workspacer.Tool;
 
 namespace Wox.Workspacer.Service
 {
@@ -375,6 +376,10 @@ namespace Wox.Workspacer.Service
                         "Go to {0}".FormatWith(repo.Path),
                         () =>
                         {
+                            if (!Directory.Exists(repo.Path))
+                            {
+                                Directory.CreateDirectory(repo.Path);
+                            }
                             WorkspacerService.OpenDir(repo.Path);
                         }
                     );

@@ -1,6 +1,6 @@
 ﻿using System.Data.SQLite;
+using Wox.EasyHelper;
 using Wox.Workspacer.Core.Service;
-using Wox.Workspacer.Tool;
 
 namespace Wox.Workspacer.Service
 {

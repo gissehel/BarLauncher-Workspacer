@@ -6,8 +6,6 @@ namespace Wox.Workspacer.Tool
 {
     public static class Extensions
     {
-        public static string FormatWith(this string self, params object[] args) => string.Format(self, args);
-
         // white space, em-dash, en-dash, underscore
         private static readonly Regex WordDelimiters = new Regex(@"[\s—–_]", RegexOptions.Compiled);
 

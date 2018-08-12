@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using Wox.EasyHelper;
 using Wox.Workspacer.Core.Service;
 using Wox.Workspacer.DomainModel;
 using Wox.Workspacer.Tool;

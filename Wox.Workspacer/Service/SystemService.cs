@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using Wox.EasyHelper;
 using Wox.Workspacer.Core.Service;
-using Wox.Workspacer.Tool;
 
 namespace Wox.Workspacer.Service
 {

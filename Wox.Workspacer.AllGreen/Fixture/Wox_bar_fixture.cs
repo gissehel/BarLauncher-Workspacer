@@ -1,8 +1,7 @@
 ﻿using AllGreen.Lib;
 using System.Linq;
+using Wox.EasyHelper;
 using Wox.Workspacer.AllGreen.Helper;
-using Wox.Workspacer.DomainModel;
-using Wox.Workspacer.Tool;
 
 namespace Wox.Workspacer.AllGreen.Fixture
 {

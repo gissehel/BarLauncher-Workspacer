@@ -6,72 +6,34 @@ using Wox.EasyHelper;
 using Wox.EasyHelper.Core.Service;
 using Wox.Workspacer.Core.Service;
 using Wox.Workspacer.DomainModel;
+using Wox.Workspacer.Tool;
 
 namespace Wox.Workspacer.Service
 {
-    public class WorkspacerResultFinder : IWoxResultFinder
+    public class WorkspacerResultFinder : WoxResultFinderBase
     {
-        private IWoxContextService WoxContextService { get; set; }
         private IWorkspacerService WorkspacerService { get; set; }
 
-        public WorkspacerResultFinder(IWoxContextService woxContextService, IWorkspacerService workspacerService)
+        public WorkspacerResultFinder(IWoxContextService woxContextService, IWorkspacerService workspacerService) : base(woxContextService)
         {
-            WoxContextService = woxContextService;
             WorkspacerService = workspacerService;
         }
 
-        public IEnumerable<WoxResult> GetResults(WoxQuery query)
+        public void Init()
         {
-            switch (query.FirstTerm)
-            {
-                case "ar":
-                    return GetArchive(query);
-
-                case "cr":
-                    return GetCreate(query);
-
-                case "cd":
-                    return GetChangeDir(query);
-
-                case "config":
-                    return GetConfig(query);
-
-                case "list":
-                    return GetList(query);
-
-                case "name":
-                    return GetName(query);
-
-                default:
-                    var commands = GetCommandHelp(query.FirstTerm);
-                    if (commands.Any())
-                    {
-                        return commands;
-                    }
-                    // return GetList(query.SearchTerms);
-                    return commands;
-            }
+            AddCommand("cr", "work cr NAME TITLE", "Create a new workspace directory in the repository NAME", GetCreate);
+            AddCommand("cd", "work cd NAME [PATTERN] [PATTERN]", "Change to a workspace directory", GetChangeDir);
+            AddCommand("ar", "work ar NAME [PATTERN] [PATTERN]", "Archive a workspace directory", GetArchive);
+            AddCommand("name", "work name NAME DIRECTORY", "Name a new repository", GetName);
+            AddCommand("list", "work list", "List all the available repositories", GetList);
+            AddCommand("config", "work config KEY VALUE", "View/Change workspacer configuration", GetConfig);
         }
 
-        private IEnumerable<WoxResult> GetArchive(WoxQuery query)
+        private IEnumerable<WoxResult> GetArchive(WoxQuery query, int position)
         {
-            string name = null;
+            string name = query.GetTermOrEmpty(position);
 
-            if (query.SearchTerms.Length > 1)
-            {
-                name = query.SearchTerms[1];
-            }
-            else
-            {
-                name = "";
-            }
-
-            string value = null;
-
-            if (query.SearchTerms.Length > 2)
-            {
-                value = GetAllSearchTermsStarting(query, 2);
-            }
+            string value = query.GetAllSearchTermsStarting(position + 1);
 
             string actualPath = WorkspacerService.GetPathByName(name);
             if (value == null && actualPath == null)
@@ -80,7 +42,7 @@ namespace Wox.Workspacer.Service
                 var repos = WorkspacerService.GetRepos();
                 foreach (var repo in repos)
                 {
-                    if (PatternMatch(name, repo.Name))
+                    if (repo.Name.MatchPatternCaseInvariant(name))
                     {
                         foundRepo = true;
                         yield return GetCompletionResult
@@ -95,7 +57,7 @@ namespace Wox.Workspacer.Service
                 {
                     if (!string.IsNullOrEmpty(name))
                     {
-                        yield return HelpArchive;
+                        yield return GetEmptyCommandResult("ar", CommandInfos);
                     }
                 }
             }
@@ -107,7 +69,7 @@ namespace Wox.Workspacer.Service
                     var workspaces = WorkspacerService.GetWorspaces(actualPath);
                     foreach (var workspace in workspaces)
                     {
-                        if (query.SearchTerms.Skip(2).All(term => PatternMatch(term, workspace)))
+                        if (query.SearchTerms.Skip(2).All(term => workspace.MatchPatternCaseInvariant(term)))
                         {
                             yield return GetActionResult
                             (
@@ -120,30 +82,16 @@ namespace Wox.Workspacer.Service
                 }
                 else
                 {
-                    yield return HelpArchive;
+                    yield return GetEmptyCommandResult("ar", CommandInfos);
                 }
             }
         }
 
-        private IEnumerable<WoxResult> GetChangeDir(WoxQuery query)
+        private IEnumerable<WoxResult> GetChangeDir(WoxQuery query, int position)
         {
-            string name = null;
+            string name = query.GetTermOrEmpty(position);
 
-            if (query.SearchTerms.Length > 1)
-            {
-                name = query.SearchTerms[1];
-            }
-            else
-            {
-                name = "";
-            }
-
-            string value = null;
-
-            if (query.SearchTerms.Length > 2)
-            {
-                value = GetAllSearchTermsStarting(query, 2);
-            }
+            string value = query.GetAllSearchTermsStarting(position + 1);
 
             string actualPath = WorkspacerService.GetPathByName(name);
             if (value == null && actualPath == null)
@@ -152,7 +100,7 @@ namespace Wox.Workspacer.Service
                 var repos = WorkspacerService.GetRepos();
                 foreach (var repo in repos)
                 {
-                    if (PatternMatch(name, repo.Name))
+                    if (repo.Name.MatchPatternCaseInvariant(name))
                     {
                         foundRepo = true;
                         yield return GetCompletionResult
@@ -167,7 +115,7 @@ namespace Wox.Workspacer.Service
                 {
                     if (!string.IsNullOrEmpty(name))
                     {
-                        yield return HelpCreate;
+                        yield return GetEmptyCommandResult("cd", CommandInfos);
                     }
                 }
             }
@@ -179,7 +127,7 @@ namespace Wox.Workspacer.Service
                     var workspaces = WorkspacerService.GetWorspaces(actualPath);
                     foreach (var workspace in workspaces)
                     {
-                        if (query.SearchTerms.Skip(2).All(term => PatternMatch(term, workspace)))
+                        if (query.SearchTerms.Skip(2).All(term => workspace.MatchPatternCaseInvariant(term)))
                         {
                             yield return GetActionResult
                             (
@@ -192,30 +140,16 @@ namespace Wox.Workspacer.Service
                 }
                 else
                 {
-                    yield return HelpChangeDir;
+                    yield return GetEmptyCommandResult("cd", CommandInfos);
                 }
             }
         }
 
-        private IEnumerable<WoxResult> GetCreate(WoxQuery query)
+        private IEnumerable<WoxResult> GetCreate(WoxQuery query, int position)
         {
-            string name = null;
+            string name = query.GetTermOrEmpty(position);
 
-            if (query.SearchTerms.Length > 1)
-            {
-                name = query.SearchTerms[1];
-            }
-            else
-            {
-                name = "";
-            }
-
-            string value = null;
-
-            if (query.SearchTerms.Length > 2)
-            {
-                value = GetAllSearchTermsStarting(query, 2);
-            }
+            string value = query.GetAllSearchTermsStarting(position + 1);
 
             if (value == null)
             {
@@ -223,7 +157,7 @@ namespace Wox.Workspacer.Service
                 var repos = WorkspacerService.GetRepos();
                 foreach (var repo in repos)
                 {
-                    if (PatternMatch(name, repo.Name))
+                    if (repo.Name.MatchPatternCaseInvariant(name))
                     {
                         foundRepo = true;
                         yield return GetCompletionResult
@@ -238,7 +172,7 @@ namespace Wox.Workspacer.Service
                 {
                     if (!string.IsNullOrEmpty(name))
                     {
-                        yield return HelpCreate;
+                        yield return GetEmptyCommandResult("cr", CommandInfos);
                     }
                 }
             }
@@ -256,30 +190,16 @@ namespace Wox.Workspacer.Service
                 }
                 else
                 {
-                    yield return HelpCreate;
+                    yield return GetEmptyCommandResult("cr", CommandInfos);
                 }
             }
         }
 
-        private IEnumerable<WoxResult> GetName(WoxQuery query)
+        private IEnumerable<WoxResult> GetName(WoxQuery query, int position)
         {
-            string name = null;
+            string name = query.GetTermOrEmpty(position);
 
-            if (query.SearchTerms.Length > 1)
-            {
-                name = query.SearchTerms[1];
-            }
-            else
-            {
-                name = "";
-            }
-
-            string value = null;
-
-            if (query.SearchTerms.Length > 2)
-            {
-                value = GetAllSearchTermsStarting(query, 2);
-            }
+            string value = query.GetAllSearchTermsStarting(position + 1);
 
             if (value == null)
             {
@@ -287,7 +207,7 @@ namespace Wox.Workspacer.Service
                 var repos = WorkspacerService.GetRepos();
                 foreach (var repo in repos)
                 {
-                    if (PatternMatch(name, repo.Name))
+                    if (repo.Name.MatchPatternCaseInvariant(name))
                     {
                         foundRepo = true;
                         yield return GetCompletionResult
@@ -353,41 +273,24 @@ namespace Wox.Workspacer.Service
             }
         }
 
-        private IEnumerable<WoxResult> GetList(WoxQuery query)
+        private IEnumerable<WoxResult> GetList(WoxQuery query, int position)
         {
-            string name = null;
+            string name = query.GetTermOrEmpty(position);
 
-            if (query.SearchTerms.Length > 1)
-            {
-                name = query.SearchTerms[1];
-            }
-            else
-            {
-                name = "";
-            }
             var repos = WorkspacerService.GetRepos();
             foreach (var repo in repos)
             {
-                if (PatternMatch(name, repo.Name))
+                if (repo.Name.MatchPatternCaseInvariant(name))
                 {
                     yield return GetActionResult
                     (
                         "work list {0}".FormatWith(repo.Name),
                         "Go to {0}".FormatWith(repo.Path),
-                        () =>
-                        {
-                            if (!Directory.Exists(repo.Path))
-                            {
-                                Directory.CreateDirectory(repo.Path);
-                            }
-                            WorkspacerService.OpenDir(repo.Path);
-                        }
+                        () => WorkspacerService.OpenDir(repo.Path)
                     );
                 }
             }
         }
-
-        private string GetAllSearchTermsStarting(WoxQuery query, int index) => string.Join(" ", query.SearchTerms.Skip(index).ToArray());
 
         private Dictionary<string, KeyValuePair<Func<WorkspacerConfiguration, string>, Action<WorkspacerConfiguration, string>>> _configNames = null;
 
@@ -403,28 +306,18 @@ namespace Wox.Workspacer.Service
             },
         });
 
-        private IEnumerable<WoxResult> GetConfig(WoxQuery query)
+        private IEnumerable<WoxResult> GetConfig(WoxQuery query, int position)
         {
             var configuration = WorkspacerService.GetConfiguration();
-
-            string configName = null;
-
-            if (query.SearchTerms.Length > 1)
-            {
-                configName = query.SearchTerms[1];
-            }
-            else
-            {
-                configName = "";
-            }
+            var configName = query.GetTermOrEmpty(position);
 
             string configValue = null;
             if (configName.Contains("="))
             {
-                var position = configName.IndexOf("=");
-                configName = GetAllSearchTermsStarting(query, 1);
-                configValue = configName.Substring(position + 1, configName.Length - position - 1);
-                configName = configName.Substring(0, position);
+                configName = query.GetAllSearchTermsStarting(position);
+                var equalPosition = configName.IndexOf("=");
+                configValue = configName.Substring(equalPosition + 1, configName.Length - equalPosition - 1);
+                configName = configName.Substring(0, equalPosition);
             }
 
             if (ConfigNames.ContainsKey(configName))
@@ -473,7 +366,7 @@ namespace Wox.Workspacer.Service
                 {
                     foreach (var configNameReference in ConfigNames.Keys.OrderBy(k => k))
                     {
-                        if (PatternMatch(configName, configNameReference))
+                        if (configNameReference.ToLowerInvariant().MatchPatternCaseInvariant(configName.ToLowerInvariant()))
                         {
                             yield return GetCompletionResult
                             (
@@ -495,58 +388,5 @@ namespace Wox.Workspacer.Service
                 }
             }
         }
-
-        private bool PatternMatch(string pattern, string command) => string.IsNullOrEmpty(pattern) || command.ToLower().Contains(pattern.ToLower());
-
-        private WoxResult _helpList = null;
-        private WoxResult _helpConfig = null;
-        private WoxResult _helpCreate = null;
-        private WoxResult _helpChangeDir = null;
-        private WoxResult _helpArchive = null;
-        private WoxResult _helpName = null;
-        private WoxResult HelpList => _helpList ?? (_helpList = GetCompletionResult("work list", "List all the available repositories", () => "list"));
-        private WoxResult HelpConfig => _helpConfig ?? (_helpConfig = GetCompletionResult("work config KEY VALUE", "View/Change workspacer configuration", () => "config"));
-        private WoxResult HelpCreate => _helpCreate ?? (_helpCreate = GetCompletionResult("work cr NAME TITLE", "Create a new workspace directory in the repository NAME", () => "cr"));
-        private WoxResult HelpChangeDir => _helpChangeDir ?? (_helpChangeDir = GetCompletionResult("work cd NAME [PATTERN] [PATTERN]", "Change to a workspace directory", () => "cd"));
-        private WoxResult HelpArchive => _helpArchive ?? (_helpArchive = GetCompletionResult("work ar NAME [PATTERN] [PATTERN]", "Archive a workspace directory", () => "ar"));
-        private WoxResult HelpName => _helpName ?? (_helpName = GetCompletionResult("work name NAME DIRECTORY", "Name a new repository", () => "name"));
-
-        private IEnumerable<WoxResult> GetCommandHelp(string pattern)
-        {
-            if (PatternMatch(pattern, "cr")) yield return HelpCreate;
-            if (PatternMatch(pattern, "cd")) yield return HelpChangeDir;
-            if (PatternMatch(pattern, "ar")) yield return HelpArchive;
-            if (PatternMatch(pattern, "name")) yield return HelpName;
-            if (PatternMatch(pattern, "list")) yield return HelpList;
-            if (PatternMatch(pattern, "config")) yield return HelpConfig;
-        }
-
-        public WoxResult GetActionResult(string title, string subTitle, Action action) => new WoxResult
-        {
-            Title = title,
-            SubTitle = subTitle,
-            Action = () =>
-            {
-                action();
-                // WoxContextService.ChangeQuery("");
-            },
-            ShouldClose = true,
-        };
-
-        public WoxResult GetCompletionResult(string title, string subTitle, Func<string> getNewQuery) => new WoxResult
-        {
-            Title = title,
-            SubTitle = subTitle,
-            Action = () => WoxContextService.ChangeQuery(WoxContextService.ActionKeyword + WoxContextService.Seperater + getNewQuery() + WoxContextService.Seperater),
-            ShouldClose = false,
-        };
-
-        public WoxResult GetCompletionResultFinal(string title, string subTitle, Func<string> getNewQuery) => new WoxResult
-        {
-            Title = title,
-            SubTitle = subTitle,
-            Action = () => WoxContextService.ChangeQuery(WoxContextService.ActionKeyword + WoxContextService.Seperater + getNewQuery()),
-            ShouldClose = false,
-        };
     }
 }

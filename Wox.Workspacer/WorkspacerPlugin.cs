@@ -18,6 +18,7 @@ namespace Wox.Workspacer
             var workspacerResultFinder = new WorkspacerResultFinder(WoxContextService, workspacerService);
 
             workspacerService.Init();
+            workspacerResultFinder.Init();
             return workspacerResultFinder;
         }
     }

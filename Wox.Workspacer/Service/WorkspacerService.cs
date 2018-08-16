@@ -60,6 +60,7 @@ namespace Wox.Workspacer.Service
 
         public void OpenDir(string path)
         {
+            WorkspacerSystemService.CreateDirectoryIfNotExists(path);
             var fullCommand = LauncherPattern.Replace("%1", path);
             StartCommand(fullCommand);
         }

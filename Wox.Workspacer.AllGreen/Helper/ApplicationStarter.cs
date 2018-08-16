@@ -4,7 +4,6 @@ using System;
 using System.IO;
 using System.Reflection;
 using Wox.EasyHelper;
-using Wox.EasyHelper.Core.Service;
 using Wox.EasyHelper.Test.Mock.Service;
 using Wox.Workspacer.Core.Service;
 using Wox.Workspacer.Mock.Service;
@@ -22,7 +21,7 @@ namespace Wox.Workspacer.AllGreen.Helper
 
         public WorkspacerSystemServiceMock WorkspacerSystemService { get; set; }
 
-        public IWoxResultFinder WoxWebAppResultFinder { get; set; }
+        public WorkspacerResultFinder WoxResultFinder { get; set; }
 
         public IWorkspacerService WorkspacerService { get; set; }
 
@@ -41,7 +40,7 @@ namespace Wox.Workspacer.AllGreen.Helper
             IWorkspacerConfigurationRepository workspacerConfigurationRepository = new WorkspacerConfigurationRepository(dataAccessService);
             IWorkspacerRepoRepository workspacerRepoRepository = new WorkspacerRepoRepository(dataAccessService);
             IWorkspacerService workspacerService = new WorkspacerService(dataAccessService, workspacerConfigurationRepository, workspacerRepoRepository, systemService, workspacerSystemService);
-            IWoxResultFinder woxWebAppResultFinder = new WorkspacerResultFinder(woxContextService, workspacerService);
+            WorkspacerResultFinder workspacerResultFinder = new WorkspacerResultFinder(woxContextService, workspacerService);
 
             systemService.ApplicationDataPath = GetApplicationDataPath();
 
@@ -50,14 +49,15 @@ namespace Wox.Workspacer.AllGreen.Helper
             SystemService = systemService;
             WorkspacerSystemService = workspacerSystemService;
             WorkspacerService = workspacerService;
-            WoxWebAppResultFinder = woxWebAppResultFinder;
+            WoxResultFinder = workspacerResultFinder;
 
-            WoxContextService.AddQueryFetcher("work", WoxWebAppResultFinder);
+            WoxContextService.AddQueryFetcher("work", WoxResultFinder);
         }
 
         public void Start()
         {
             WorkspacerService.Init();
+            WoxResultFinder.Init();
         }
 
         private static string GetThisAssemblyDirectory()

@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
+using Wox.EasyHelper;
 
 namespace Wox.Workspacer.Tool
 {
@@ -58,5 +59,7 @@ namespace Wox.Workspacer.Tool
         }
 
         public static string ToSlug(this string value, string separator) => value.ToSlug().Replace("-", separator);
+
+        public static bool MatchPatternCaseInvariant(this string command, string pattern) => command.ToLowerInvariant().MatchPattern(pattern);
     }
 }

@@ -19,10 +19,10 @@ namespace Wox.Workspacer.AllGreen.Fixture
                 .ApplicationStarter
                 .SystemService
                 .CommandLineStarted
-                .Select(pair => new Result
+                .Select(cl => new Result
                 {
-                    Command = pair.Key,
-                    Arguments = pair.Value
+                    Command = cl.Command,
+                    Arguments = cl.Arguments
                 }).ToList();
             return result.Cast<object>();
         }

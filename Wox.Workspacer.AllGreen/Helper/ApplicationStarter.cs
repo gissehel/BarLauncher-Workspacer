@@ -20,6 +20,8 @@ namespace Wox.Workspacer.AllGreen.Helper
 
         public SystemServiceMock SystemService { get; set; }
 
+        public WorkspacerSystemServiceMock WorkspacerSystemService { get; set; }
+
         public IWoxResultFinder WoxWebAppResultFinder { get; set; }
 
         public IWorkspacerService WorkspacerService { get; set; }
@@ -34,10 +36,11 @@ namespace Wox.Workspacer.AllGreen.Helper
             QueryServiceMock queryService = new QueryServiceMock();
             WoxContextServiceMock woxContextService = new WoxContextServiceMock(queryService);
             SystemServiceMock systemService = new SystemServiceMock();
-            IDataAccessService dataAccessService = new DataAccessService(systemService);
+            WorkspacerSystemServiceMock workspacerSystemService = new WorkspacerSystemServiceMock(systemService);
+            IDataAccessService dataAccessService = new DataAccessService(workspacerSystemService);
             IWorkspacerConfigurationRepository workspacerConfigurationRepository = new WorkspacerConfigurationRepository(dataAccessService);
             IWorkspacerRepoRepository workspacerRepoRepository = new WorkspacerRepoRepository(dataAccessService);
-            IWorkspacerService workspacerService = new WorkspacerService(dataAccessService, workspacerConfigurationRepository, workspacerRepoRepository, systemService);
+            IWorkspacerService workspacerService = new WorkspacerService(dataAccessService, workspacerConfigurationRepository, workspacerRepoRepository, systemService, workspacerSystemService);
             IWoxResultFinder woxWebAppResultFinder = new WorkspacerResultFinder(woxContextService, workspacerService);
 
             systemService.ApplicationDataPath = GetApplicationDataPath();
@@ -45,6 +48,7 @@ namespace Wox.Workspacer.AllGreen.Helper
             WoxContextService = woxContextService;
             QueryService = queryService;
             SystemService = systemService;
+            WorkspacerSystemService = workspacerSystemService;
             WorkspacerService = workspacerService;
             WoxWebAppResultFinder = woxWebAppResultFinder;
 

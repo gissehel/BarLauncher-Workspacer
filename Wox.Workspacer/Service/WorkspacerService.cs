@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using Wox.EasyHelper;
+using Wox.EasyHelper.Core.Service;
 using Wox.Workspacer.Core.Service;
 using Wox.Workspacer.DomainModel;
 using Wox.Workspacer.Tool;
@@ -17,13 +18,15 @@ namespace Wox.Workspacer.Service
         private IWorkspacerConfigurationRepository WorkspacerConfigurationRepository { get; set; }
         private IWorkspacerRepoRepository WorkspacerRepoRepository { get; set; }
         private ISystemService SystemService { get; set; }
+        private IWorkspacerSystemService WorkspacerSystemService { get; set; }
 
-        public WorkspacerService(IDataAccessService dataAccessService, IWorkspacerConfigurationRepository workspacerConfigurationRepository, IWorkspacerRepoRepository workspacerRepoRepository, ISystemService systemService)
+        public WorkspacerService(IDataAccessService dataAccessService, IWorkspacerConfigurationRepository workspacerConfigurationRepository, IWorkspacerRepoRepository workspacerRepoRepository, ISystemService systemService, IWorkspacerSystemService workspacerSystemService)
         {
             DataAccessService = dataAccessService;
             WorkspacerConfigurationRepository = workspacerConfigurationRepository;
             WorkspacerRepoRepository = workspacerRepoRepository;
             SystemService = systemService;
+            WorkspacerSystemService = workspacerSystemService;
         }
 
         public void Init()
@@ -51,7 +54,7 @@ namespace Wox.Workspacer.Service
 
         public void SetPathByName(string name, string path)
         {
-            SystemService.CreateDirectoryIfNotExists(path);
+            WorkspacerSystemService.CreateDirectoryIfNotExists(path);
             WorkspacerRepoRepository.SetPath(name, path);
         }
 
@@ -95,10 +98,10 @@ namespace Wox.Workspacer.Service
 
         public string CreateDir(string repoPath, string value)
         {
-            var directoryName = "{0}-{1}".FormatWith(SystemService.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), value.ToSlug("_"));
+            var directoryName = "{0}-{1}".FormatWith(WorkspacerSystemService.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), value.ToSlug("_"));
             string workspacePath = Path.Combine(repoPath, directoryName);
 
-            SystemService.CreateDirectoryIfNotExists(workspacePath);
+            WorkspacerSystemService.CreateDirectoryIfNotExists(workspacePath);
             OpenDir(workspacePath);
 
             return workspacePath;
@@ -106,27 +109,27 @@ namespace Wox.Workspacer.Service
 
         public IEnumerable<string> GetWorspaces(string actualPath)
         {
-            return SystemService.GetDirectories(actualPath).OrderBy(x => x);
+            return WorkspacerSystemService.GetDirectories(actualPath).OrderBy(x => x);
         }
 
         public void Archive(string actualPath, string workspace)
         {
             string fullWorkspacePath = Path.Combine(actualPath, workspace);
-            if (SystemService.DirectoryExists(fullWorkspacePath))
+            if (WorkspacerSystemService.DirectoryExists(fullWorkspacePath))
             {
                 string archiveDirectory = Path.Combine(actualPath, "0__ARCHIVE__");
                 string archivedWorkspace = Path.Combine(archiveDirectory, workspace);
-                SystemService.CreateDirectoryIfNotExists(archiveDirectory);
+                WorkspacerSystemService.CreateDirectoryIfNotExists(archiveDirectory);
 
                 string archivedTargetWorkspace = archivedWorkspace;
                 long count = 0;
-                while (SystemService.DirectoryExists(archivedTargetWorkspace))
+                while (WorkspacerSystemService.DirectoryExists(archivedTargetWorkspace))
                 {
                     count++;
                     archivedTargetWorkspace = "{0}-{1:N5}".FormatWith(archivedWorkspace, count);
                 }
 
-                SystemService.MoveDirectory(fullWorkspacePath, archivedTargetWorkspace);
+                WorkspacerSystemService.MoveDirectory(fullWorkspacePath, archivedTargetWorkspace);
 
                 OpenDir(archivedTargetWorkspace);
             }

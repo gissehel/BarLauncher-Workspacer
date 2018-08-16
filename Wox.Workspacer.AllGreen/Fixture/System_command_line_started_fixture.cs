@@ -12,8 +12,8 @@ namespace Wox.Workspacer.AllGreen.Fixture
             {
                 yield return new Result
                 {
-                    Command = commandLineStarted.Key,
-                    Arguments = commandLineStarted.Value,
+                    Command = commandLineStarted.Command,
+                    Arguments = commandLineStarted.Arguments,
                 };
             }
         }

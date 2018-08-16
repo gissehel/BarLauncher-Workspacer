@@ -1,43 +1,36 @@
-﻿using System;
+﻿using FluentDataAccess.Core.Service;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Wox.EasyHelper;
+using Wox.EasyHelper.Core.Service;
 using Wox.Workspacer.Core.Service;
 
 namespace Wox.Workspacer.Service
 {
-    public class SystemService : ISystemService
+    public class WorkspacerSystemService : IWorkspacerSystemService
     {
-        private string ApplicationName { get; set; }
-        private string _applicationDataPath = null;
+        private string ApplicationName => SystemService.ApplicationName;
+        private string ApplicationDataPath => SystemService.ApplicationDataPath;
 
-        public SystemService(string applicationName)
+        public WorkspacerSystemService(ISystemService systemService)
         {
-            ApplicationName = applicationName;
+            SystemService = systemService;
         }
-
-        public string ApplicationDataPath => _applicationDataPath ?? (_applicationDataPath = GetApplicationDataPath());
 
         public DateTime Now => DateTime.Now;
 
         public string DatabaseName => ApplicationName;
 
+        public ISystemService SystemService { get; }
+
+        string IDataAccessConfigurationService.ApplicationDataPath => SystemService.ApplicationDataPath;
+
         public string GetExportPath() => ApplicationDataPath;
 
         public string GetUID() => "{0:yyyyMMdd-HHmmss-fff}".FormatWith(DateTime.Now);
-
-        private string GetApplicationDataPath()
-        {
-            var appDataPathParent = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var appDataPath = Path.Combine(appDataPathParent, ApplicationName);
-            if (!Directory.Exists(appDataPath))
-            {
-                Directory.CreateDirectory(appDataPath);
-            }
-            return appDataPath;
-        }
 
         public void StartCommandLine(string command, string arguments)
         {

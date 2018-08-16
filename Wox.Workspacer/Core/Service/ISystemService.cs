@@ -4,12 +4,8 @@ using System.Collections.Generic;
 
 namespace Wox.Workspacer.Core.Service
 {
-    public interface ISystemService : IDataAccessConfigurationService
+    public interface IWorkspacerSystemService : IDataAccessConfigurationService
     {
-        void StartCommandLine(string command, string arguments);
-
-        // string ApplicationDataPath { get; }
-
         bool DirectoryExists(string path);
 
         void CreateDirectoryIfNotExists(string path);

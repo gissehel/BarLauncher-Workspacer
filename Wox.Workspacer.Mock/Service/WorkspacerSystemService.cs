@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using Wox.EasyHelper.Core.Service;
 using Wox.Workspacer.Core.Service;
 
 namespace Wox.Workspacer.Mock.Service
 {
-    public class SystemServiceMock : ISystemService
+    public class WorkspacerSystemServiceMock : IWorkspacerSystemService
     {
-        public string ApplicationDataPath { get; set; }
+        public string ApplicationDataPath => SystemService.ApplicationDataPath;
+
+        public WorkspacerSystemServiceMock(ISystemService systemService)
+        {
+            SystemService = systemService;
+        }
 
         public List<KeyValuePair<string, string>> CommandLineStarted { get; private set; } = new List<KeyValuePair<string, string>>();
 
@@ -19,6 +25,8 @@ namespace Wox.Workspacer.Mock.Service
         }
 
         public string DatabaseName => "TestDB";
+
+        public ISystemService SystemService { get; }
 
         public void StartCommandLine(string command, string arguments)
         {

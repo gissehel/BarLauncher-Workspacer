@@ -24,5 +24,7 @@ namespace Wox.Workspacer.Core.Service
         IEnumerable<string> GetWorspaces(string actualPath);
 
         void Archive(string actualPath, string workspace);
+
+        void Dispose();
     }
 }

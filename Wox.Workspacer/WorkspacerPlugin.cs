@@ -1,13 +1,14 @@
 ﻿using FluentDataAccess.Service;
 using Wox.EasyHelper;
+using Wox.EasyHelper.Core.Service;
 using Wox.EasyHelper.Service;
 using Wox.Workspacer.Service;
 
 namespace Wox.Workspacer
 {
-    public class WorkspacerPlugin : PluginBase<WorkspacerResultFinder>
+    public class WorkspacerPlugin : WoxPlugin
     {
-        public override WorkspacerResultFinder PrepareContext()
+        public override IWoxResultFinder PrepareContext()
         {
             var systemService = new SystemService("Wox.Workspacer");
             var workspacerSystemService = new WorkspacerSystemService(systemService);
@@ -17,8 +18,6 @@ namespace Wox.Workspacer
             var workspacerService = new WorkspacerService(dataAccessService, workspacerConfigurationRepository, workspacerRepoRepository, systemService, workspacerSystemService);
             var workspacerResultFinder = new WorkspacerResultFinder(WoxContextService, workspacerService);
 
-            workspacerService.Init();
-            workspacerResultFinder.Init();
             return workspacerResultFinder;
         }
     }

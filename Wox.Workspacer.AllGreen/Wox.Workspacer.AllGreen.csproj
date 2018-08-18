@@ -9,22 +9,13 @@
     <PackageReference Include="FluentDataAccess" Version="1.0.1" />
     <PackageReference Include="NUnit" Version="3.10.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
-    <PackageReference Include="Wox.EasyHelper" Version="1.0.4" />
-    <PackageReference Include="Wox.EasyHelper.Test.Mock" Version="1.0.4" />
+    <PackageReference Include="Wox.EasyHelper" Version="1.0.6" />
+    <PackageReference Include="Wox.EasyHelper.Test.Mock" Version="1.0.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Wox.Workspacer.Mock\Wox.Workspacer.Mock.csproj" />
     <ProjectReference Include="..\Wox.Workspacer\Wox.Workspacer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="plugin.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Unitlib-64.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

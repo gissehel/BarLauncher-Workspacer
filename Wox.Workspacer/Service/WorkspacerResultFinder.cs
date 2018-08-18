@@ -10,7 +10,7 @@ using Wox.Workspacer.Tool;
 
 namespace Wox.Workspacer.Service
 {
-    public class WorkspacerResultFinder : WoxResultFinderBase
+    public class WorkspacerResultFinder : WoxResultFinder
     {
         private IWorkspacerService WorkspacerService { get; set; }
 
@@ -19,14 +19,21 @@ namespace Wox.Workspacer.Service
             WorkspacerService = workspacerService;
         }
 
-        public void Init()
+        public override void Init()
         {
+            WorkspacerService.Init();
+
             AddCommand("cr", "work cr NAME TITLE", "Create a new workspace directory in the repository NAME", GetCreate);
             AddCommand("cd", "work cd NAME [PATTERN] [PATTERN]", "Change to a workspace directory", GetChangeDir);
             AddCommand("ar", "work ar NAME [PATTERN] [PATTERN]", "Archive a workspace directory", GetArchive);
             AddCommand("name", "work name NAME DIRECTORY", "Name a new repository", GetName);
             AddCommand("list", "work list", "List all the available repositories", GetList);
             AddCommand("config", "work config KEY VALUE", "View/Change workspacer configuration", GetConfig);
+        }
+
+        public override void Dispose()
+        {
+            WorkspacerService.Dispose();
         }
 
         private IEnumerable<WoxResult> GetArchive(WoxQuery query, int position)

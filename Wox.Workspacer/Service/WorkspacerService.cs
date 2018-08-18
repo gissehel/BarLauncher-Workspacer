@@ -12,7 +12,6 @@ using Wox.Workspacer.Tool;
 namespace Wox.Workspacer.Service
 {
     public class WorkspacerService : IWorkspacerService
-
     {
         private IDataAccessService DataAccessService { get; set; }
         private IWorkspacerConfigurationRepository WorkspacerConfigurationRepository { get; set; }
@@ -134,6 +133,11 @@ namespace Wox.Workspacer.Service
 
                 OpenDir(archivedTargetWorkspace);
             }
+        }
+
+        public void Dispose()
+        {
+            DataAccessService.Dispose();
         }
     }
 }

@@ -1,0 +1,12 @@
+﻿{
+  "ID": "80985903390970618000000000000001",
+  "ActionKeyword": "work",
+  "Name": "Workspacer",
+  "Description": "Create and manage workspaces",
+  "Author": "gissehel",
+  "Version": "2.0.0",
+  "Language": "csharp",
+  "Website": "https://github.com/gissehel/BarLauncher-Workspacer",
+  "IcoPath": "BarLauncher-Workspacer-64.png",
+  "ExecuteFileName": "BarLauncher.Workspacer.Wox.dll"
+}

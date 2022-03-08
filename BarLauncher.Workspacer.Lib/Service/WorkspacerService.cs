@@ -13,6 +13,8 @@ namespace BarLauncher.Workspacer.Lib.Service
 {
     public class WorkspacerService : IWorkspacerService
     {
+        public bool UseStandardDirectoryOpener { get; set; }
+
         private IDataAccessService DataAccessService { get; set; }
         private IWorkspacerConfigurationRepository WorkspacerConfigurationRepository { get; set; }
         private IWorkspacerRepoRepository WorkspacerRepoRepository { get; set; }
@@ -60,8 +62,15 @@ namespace BarLauncher.Workspacer.Lib.Service
         public void OpenDir(string path)
         {
             WorkspacerSystemService.CreateDirectoryIfNotExists(path);
-            var fullCommand = LauncherPattern.Replace("%1", path);
-            StartCommand(fullCommand);
+            if (UseStandardDirectoryOpener)
+            {
+                SystemService.OpenDirectory(path);
+            }
+            else
+            {
+                var fullCommand = LauncherPattern.Replace("%1", path);
+                StartCommand(fullCommand);
+            }
         }
 
         private void StartCommand(string fullCommand)

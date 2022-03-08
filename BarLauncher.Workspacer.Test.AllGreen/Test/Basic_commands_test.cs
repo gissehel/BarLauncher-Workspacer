@@ -21,9 +21,9 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work cr NAME TITLE", "Create a new workspace directory in the repository NAME")
+            .Check("work create NAME TITLE", "Create a new workspace directory in the repository NAME")
             .Check("work cd NAME [PATTERN] [PATTERN]", "Change to a workspace directory")
-            .Check("work ar NAME [PATTERN] [PATTERN]", "Archive a workspace directory")
+            .Check("work archive NAME [PATTERN] [PATTERN]", "Archive a workspace directory")
             .Check("work name NAME DIRECTORY", "Name a new repository")
             .Check("work list", "List all the available repositories")
             .Check("work config KEY VALUE", "View/Change workspacer configuration")
@@ -36,7 +36,8 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work ar NAME [PATTERN] [PATTERN]", "Archive a workspace directory")
+            .Check("work create NAME TITLE", "Create a new workspace directory in the repository NAME")
+            .Check("work archive NAME [PATTERN] [PATTERN]", "Archive a workspace directory")
             .Check("work name NAME DIRECTORY", "Name a new repository")
             .EndUsing()
 

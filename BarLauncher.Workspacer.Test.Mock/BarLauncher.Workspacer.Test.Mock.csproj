@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="..\Common.targets" />
 
-    <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
-    </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+	</PropertyGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\BarLauncher.Workspacer.Lib\BarLauncher.Workspacer.Lib.csproj" />
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\BarLauncher.Workspacer.Lib\BarLauncher.Workspacer.Lib.csproj" />
+	</ItemGroup>
 
 </Project>

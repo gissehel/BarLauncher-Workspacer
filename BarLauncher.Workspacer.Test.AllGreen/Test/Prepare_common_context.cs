@@ -31,7 +31,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .Using<Bar_launcher_bar_fixture>()
 
-            .DoAction(f => f.Write_query(@"work cr data task 1"))
+            .DoAction(f => f.Write_query(@"work create data task 1"))
             .DoAction(f => f.Select_line(1))
             .DoAction(f => f.Display_bar_launcher())
 
@@ -39,7 +39,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .Using<Bar_launcher_bar_fixture>()
 
-            .DoAction(f => f.Write_query(@"work cr data another task"))
+            .DoAction(f => f.Write_query(@"work create data another task"))
             .DoAction(f => f.Select_line(1))
             .DoAction(f => f.Display_bar_launcher())
 
@@ -51,7 +51,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .Using<Bar_launcher_bar_fixture>()
 
-            .DoAction(f => f.Write_query(@"work cr data new task"))
+            .DoAction(f => f.Write_query(@"work create data new task"))
             .DoAction(f => f.Select_line(1))
             .DoAction(f => f.Display_bar_launcher())
 
@@ -63,7 +63,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .Using<Bar_launcher_bar_fixture>()
 
-            .DoAction(f => f.Write_query(@"work cr data this item contains the word shrubbery"))
+            .DoAction(f => f.Write_query(@"work create data this item contains the word shrubbery"))
             .DoAction(f => f.Select_line(1))
             .DoAction(f => f.Display_bar_launcher())
 
@@ -75,7 +75,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .Using<Bar_launcher_bar_fixture>()
 
-            .DoAction(f => f.Write_query(@"work cr data ruby"))
+            .DoAction(f => f.Write_query(@"work create data ruby"))
             .DoAction(f => f.Select_line(1))
             .DoAction(f => f.Display_bar_launcher())
 
@@ -87,7 +87,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .Using<Bar_launcher_bar_fixture>()
 
-            .DoAction(f => f.Write_query(@"work cr data this contains accents like éèàµç"))
+            .DoAction(f => f.Write_query(@"work create data this contains accents like éèàµç"))
             .DoAction(f => f.Select_line(1))
             .DoAction(f => f.Display_bar_launcher())
 

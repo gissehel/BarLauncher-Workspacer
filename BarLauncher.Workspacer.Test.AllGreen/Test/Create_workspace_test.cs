@@ -14,29 +14,29 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
             .Include<Prepare_common_context>()
 
             .Using<Bar_launcher_bar_fixture>()
-            .DoAction(f => f.Write_query(@"work cr"))
+            .DoAction(f => f.Write_query(@"work create"))
             .EndUsing()
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check(@"work cr data", @"Create a new workspace in the data repo")
-            .Check(@"work cr erk", @"Create a new workspace in the erk repo")
+            .Check(@"work create data", @"Create a new workspace in the data repo")
+            .Check(@"work create erk", @"Create a new workspace in the erk repo")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
             .DoAction(f => f.Append__on_query(@" a"))
-            .DoCheck(f => f.The_current_query_is(), "work cr a")
+            .DoCheck(f => f.The_current_query_is(), "work create a")
             .EndUsing()
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check(@"work cr data", @"Create a new workspace in the data repo")
+            .Check(@"work create data", @"Create a new workspace in the data repo")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
             .DoAction(f => f.Select_line(1))
             .DoAccept(f => f.Bar_launcher_is_displayed())
-            .DoCheck(f => f.The_current_query_is(), "work cr data ")
+            .DoCheck(f => f.The_current_query_is(), "work create data ")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -45,7 +45,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
              .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check(@"work cr data log parsing", @"Create new workspace ""log parsing"" in repo data")
+            .Check(@"work create data log parsing", @"Create new workspace ""log parsing"" in repo data")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()

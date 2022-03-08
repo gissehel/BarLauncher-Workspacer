@@ -28,13 +28,13 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
-            .DoAction(f => f.Write_query("work ar"))
+            .DoAction(f => f.Write_query("work archive"))
             .EndUsing()
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work ar data [PATTERN] [PATTERN]", "Archive a workspace in the data repo")
-            .Check("work ar erk [PATTERN] [PATTERN]", "Archive a workspace in the erk repo")
+            .Check("work archive data [PATTERN] [PATTERN]", "Archive a workspace in the data repo")
+            .Check("work archive erk [PATTERN] [PATTERN]", "Archive a workspace in the erk repo")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -45,8 +45,8 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work ar data 2014-07-29-this_item_contains_the_word_shrubbery", "Archive 2014-07-29-this_item_contains_the_word_shrubbery")
-            .Check("work ar data 2014-08-07-ruby", "Archive 2014-08-07-ruby")
+            .Check("work archive data 2014-07-29-this_item_contains_the_word_shrubbery", "Archive 2014-07-29-this_item_contains_the_word_shrubbery")
+            .Check("work archive data 2014-08-07-ruby", "Archive 2014-08-07-ruby")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()

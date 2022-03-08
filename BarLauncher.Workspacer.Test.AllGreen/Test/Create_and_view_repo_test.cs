@@ -23,6 +23,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
+            .Check("work cd NAME [PATTERN] [PATTERN]", "Change to a workspace directory")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -31,6 +32,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
+            .Check("work cd NAME [PATTERN] [PATTERN]", "Change to a workspace directory")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()

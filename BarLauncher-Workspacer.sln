@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarLauncher.Workspacer.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarLauncher.Workspacer.Test.AllGreen", "BarLauncher.Workspacer.Test.AllGreen\BarLauncher.Workspacer.Test.AllGreen.csproj", "{B6829159-1531-4E38-875C-9623942B2D2D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarLauncher.Workspacer.Flow.Launcher", "BarLauncher.Workspacer.Flow.Launcher\BarLauncher.Workspacer.Flow.Launcher.csproj", "{25791BA1-526B-4756-853D-053ED55C2ADA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B6829159-1531-4E38-875C-9623942B2D2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6829159-1531-4E38-875C-9623942B2D2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6829159-1531-4E38-875C-9623942B2D2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25791BA1-526B-4756-853D-053ED55C2ADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25791BA1-526B-4756-853D-053ED55C2ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25791BA1-526B-4756-853D-053ED55C2ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25791BA1-526B-4756-853D-053ED55C2ADA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

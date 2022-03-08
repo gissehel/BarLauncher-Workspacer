@@ -5,6 +5,7 @@ namespace BarLauncher.Workspacer.Lib.Core.Service
 {
     public interface IWorkspacerService
     {
+        bool UseStandardDirectoryOpener { get; set; }
         void Init();
 
         WorkspacerConfiguration GetConfiguration();

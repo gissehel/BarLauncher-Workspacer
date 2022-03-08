@@ -23,12 +23,16 @@ namespace BarLauncher.Workspacer.Lib.Service
         {
             WorkspacerService.Init();
 
-            AddCommand("cr", "work cr NAME TITLE", "Create a new workspace directory in the repository NAME", GetCreate);
+            AddCommand("create", "work create NAME TITLE", "Create a new workspace directory in the repository NAME", GetCreate);
             AddCommand("cd", "work cd NAME [PATTERN] [PATTERN]", "Change to a workspace directory", GetChangeDir);
-            AddCommand("ar", "work ar NAME [PATTERN] [PATTERN]", "Archive a workspace directory", GetArchive);
+            AddCommand("archive", "work archive NAME [PATTERN] [PATTERN]", "Archive a workspace directory", GetArchive);
             AddCommand("name", "work name NAME DIRECTORY", "Name a new repository", GetName);
             AddCommand("list", "work list", "List all the available repositories", GetList);
-            AddCommand("config", "work config KEY VALUE", "View/Change workspacer configuration", GetConfig);
+            if (! WorkspacerService.UseStandardDirectoryOpener)
+            {
+                AddCommand("config", "work config KEY VALUE", "View/Change workspacer configuration", GetConfig);
+            }
+            AddDefaultCommand(GetChangeDir);
         }
 
         public override void Dispose()
@@ -54,9 +58,9 @@ namespace BarLauncher.Workspacer.Lib.Service
                         foundRepo = true;
                         yield return GetCompletionResult
                         (
-                            "work ar {0} [PATTERN] [PATTERN]".FormatWith(repo.Name),
+                            "work archive {0} [PATTERN] [PATTERN]".FormatWith(repo.Name),
                             "Archive a workspace in the {0} repo".FormatWith(repo.Name),
-                            () => "ar {0}".FormatWith(repo.Name)
+                            () => "archive {0}".FormatWith(repo.Name)
                         );
                     }
                 }
@@ -80,7 +84,7 @@ namespace BarLauncher.Workspacer.Lib.Service
                         {
                             yield return GetActionResult
                             (
-                                "work ar {0} {1}".FormatWith(name, workspace),
+                                "work archive {0} {1}".FormatWith(name, workspace),
                                 "Archive {1}".FormatWith(name, workspace),
                                 () => WorkspacerService.Archive(actualPath, workspace)
                             );
@@ -169,9 +173,9 @@ namespace BarLauncher.Workspacer.Lib.Service
                         foundRepo = true;
                         yield return GetCompletionResult
                         (
-                            "work cr {0}".FormatWith(repo.Name),
+                            "work create {0}".FormatWith(repo.Name),
                             "Create a new workspace in the {0} repo".FormatWith(repo.Name),
-                            () => "cr {0}".FormatWith(repo.Name)
+                            () => "create {0}".FormatWith(repo.Name)
                         );
                     }
                 }
@@ -179,7 +183,7 @@ namespace BarLauncher.Workspacer.Lib.Service
                 {
                     if (!string.IsNullOrEmpty(name))
                     {
-                        yield return GetEmptyCommandResult("cr", CommandInfos);
+                        yield return GetEmptyCommandResult("create", CommandInfos);
                     }
                 }
             }
@@ -190,14 +194,14 @@ namespace BarLauncher.Workspacer.Lib.Service
                 {
                     yield return GetActionResult
                     (
-                        "work cr {0} {1}".FormatWith(name, value),
+                        "work create {0} {1}".FormatWith(name, value),
                         "Create new workspace \"{1}\" in repo {0}".FormatWith(name, value),
                         () => WorkspacerService.CreateDir(actualPath, value)
                     );
                 }
                 else
                 {
-                    yield return GetEmptyCommandResult("cr", CommandInfos);
+                    yield return GetEmptyCommandResult("create", CommandInfos);
                 }
             }
         }

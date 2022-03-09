@@ -1,6 +1,6 @@
 <Project>
+    <Import Project="Version.targets" />
     <PropertyGroup>
-        <Version>2.0.1</Version>
         <Authors>gissehel</Authors>
         <Copyright>MIT</Copyright>
     </PropertyGroup>

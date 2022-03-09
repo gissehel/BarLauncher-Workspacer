@@ -20,7 +20,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work cd NAME [PATTERN] [PATTERN]", "Change to a workspace directory")
+            .Check("cd NAME [PATTERN] [PATTERN]", "Change to a workspace directory")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -30,8 +30,8 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work cd data [PATTERN] [PATTERN]", "Search the data repo")
-            .Check("work cd erk [PATTERN] [PATTERN]", "Search the erk repo")
+            .Check("cd data [PATTERN] [PATTERN]", "Search the data repo")
+            .Check("cd erk [PATTERN] [PATTERN]", "Search the erk repo")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -41,7 +41,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work cd data [PATTERN] [PATTERN]", "Search the data repo")
+            .Check("cd data [PATTERN] [PATTERN]", "Search the data repo")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -51,12 +51,12 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work cd data 2014-07-12-another_task", "Go to 2014-07-12-another_task")
-            .Check("work cd data 2014-07-12-task_1", "Go to 2014-07-12-task_1")
-            .Check("work cd data 2014-07-19-new_task", "Go to 2014-07-19-new_task")
-            .Check("work cd data 2014-07-29-this_item_contains_the_word_shrubbery", "Go to 2014-07-29-this_item_contains_the_word_shrubbery")
-            .Check("work cd data 2014-08-07-ruby", "Go to 2014-08-07-ruby")
-            .Check("work cd data 2014-08-11-this_contains_accents_like_eeac", "Go to 2014-08-11-this_contains_accents_like_eeac")
+            .Check("cd data 2014-07-12-another_task", "Go to 2014-07-12-another_task")
+            .Check("cd data 2014-07-12-task_1", "Go to 2014-07-12-task_1")
+            .Check("cd data 2014-07-19-new_task", "Go to 2014-07-19-new_task")
+            .Check("cd data 2014-07-29-this_item_contains_the_word_shrubbery", "Go to 2014-07-29-this_item_contains_the_word_shrubbery")
+            .Check("cd data 2014-08-07-ruby", "Go to 2014-08-07-ruby")
+            .Check("cd data 2014-08-11-this_contains_accents_like_eeac", "Go to 2014-08-11-this_contains_accents_like_eeac")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -66,8 +66,8 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work cd data 2014-07-29-this_item_contains_the_word_shrubbery", "Go to 2014-07-29-this_item_contains_the_word_shrubbery")
-            .Check("work cd data 2014-08-07-ruby", "Go to 2014-08-07-ruby")
+            .Check("cd data 2014-07-29-this_item_contains_the_word_shrubbery", "Go to 2014-07-29-this_item_contains_the_word_shrubbery")
+            .Check("cd data 2014-08-07-ruby", "Go to 2014-08-07-ruby")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -77,7 +77,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work cd data 2014-07-29-this_item_contains_the_word_shrubbery", "Go to 2014-07-29-this_item_contains_the_word_shrubbery")
+            .Check("cd data 2014-07-29-this_item_contains_the_word_shrubbery", "Go to 2014-07-29-this_item_contains_the_word_shrubbery")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()

@@ -23,7 +23,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work cd NAME [PATTERN] [PATTERN]", "Change to a workspace directory")
+            .Check("cd NAME [PATTERN] [PATTERN]", "Change to a workspace directory")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -32,7 +32,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work cd NAME [PATTERN] [PATTERN]", "Change to a workspace directory")
+            .Check("cd NAME [PATTERN] [PATTERN]", "Change to a workspace directory")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -41,7 +41,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work name data", "There is no repo named data yet")
+            .Check("name data", "There is no repo named data yet")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -50,7 +50,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check(@"work name data C:\user\banta\data", @"Set repo name data to path C:\user\banta\data")
+            .Check(@"name data C:\user\banta\data", @"Set repo name data to path C:\user\banta\data")
             .EndUsing()
 
             .Using<System_fixture>()
@@ -81,7 +81,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work list", "List all the available repositories")
+            .Check("list", "List all the available repositories")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -92,7 +92,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work list data", @"Go to C:\user\banta\data")
+            .Check("list data", @"Go to C:\user\banta\data")
             .EndUsing()
 
             .UsingList<System_command_line_started_fixture>()
@@ -120,8 +120,8 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work list data", @"Go to C:\user\banta\data")
-            .Check("work list erk", @"Go to C:\Storage\With a space\erk")
+            .Check("list data", @"Go to C:\user\banta\data")
+            .Check("list erk", @"Go to C:\Storage\With a space\erk")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()

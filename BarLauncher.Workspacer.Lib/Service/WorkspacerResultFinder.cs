@@ -23,14 +23,14 @@ namespace BarLauncher.Workspacer.Lib.Service
         {
             WorkspacerService.Init();
 
-            AddCommand("create", "work create NAME TITLE", "Create a new workspace directory in the repository NAME", GetCreate);
-            AddCommand("cd", "work cd NAME [PATTERN] [PATTERN]", "Change to a workspace directory", GetChangeDir);
-            AddCommand("archive", "work archive NAME [PATTERN] [PATTERN]", "Archive a workspace directory", GetArchive);
-            AddCommand("name", "work name NAME DIRECTORY", "Name a new repository", GetName);
-            AddCommand("list", "work list", "List all the available repositories", GetList);
+            AddCommand("create", "create NAME TITLE", "Create a new workspace directory in the repository NAME", GetCreate);
+            AddCommand("cd", "cd NAME [PATTERN] [PATTERN]", "Change to a workspace directory", GetChangeDir);
+            AddCommand("archive", "archive NAME [PATTERN] [PATTERN]", "Archive a workspace directory", GetArchive);
+            AddCommand("name", "name NAME DIRECTORY", "Name a new repository", GetName);
+            AddCommand("list", "list", "List all the available repositories", GetList);
             if (! WorkspacerService.UseStandardDirectoryOpener)
             {
-                AddCommand("config", "work config KEY VALUE", "View/Change workspacer configuration", GetConfig);
+                AddCommand("config", "config KEY VALUE", "View/Change workspacer configuration", GetConfig);
             }
             AddDefaultCommand(GetChangeDir);
         }
@@ -58,7 +58,7 @@ namespace BarLauncher.Workspacer.Lib.Service
                         foundRepo = true;
                         yield return GetCompletionResult
                         (
-                            "work archive {0} [PATTERN] [PATTERN]".FormatWith(repo.Name),
+                            "archive {0} [PATTERN] [PATTERN]".FormatWith(repo.Name),
                             "Archive a workspace in the {0} repo".FormatWith(repo.Name),
                             () => "archive {0}".FormatWith(repo.Name)
                         );
@@ -84,7 +84,7 @@ namespace BarLauncher.Workspacer.Lib.Service
                         {
                             yield return GetActionResult
                             (
-                                "work archive {0} {1}".FormatWith(name, workspace),
+                                "archive {0} {1}".FormatWith(name, workspace),
                                 "Archive {1}".FormatWith(name, workspace),
                                 () => WorkspacerService.Archive(actualPath, workspace)
                             );
@@ -116,7 +116,7 @@ namespace BarLauncher.Workspacer.Lib.Service
                         foundRepo = true;
                         yield return GetCompletionResult
                         (
-                            "work cd {0} [PATTERN] [PATTERN]".FormatWith(repo.Name),
+                            "cd {0} [PATTERN] [PATTERN]".FormatWith(repo.Name),
                             "Search the {0} repo".FormatWith(repo.Name),
                             () => "cd {0}".FormatWith(repo.Name)
                         );
@@ -142,7 +142,7 @@ namespace BarLauncher.Workspacer.Lib.Service
                         {
                             yield return GetActionResult
                             (
-                                "work cd {0} {1}".FormatWith(name, workspace),
+                                "cd {0} {1}".FormatWith(name, workspace),
                                 "Go to {1}".FormatWith(name, workspace),
                                 () => WorkspacerService.OpenDir(Path.Combine(actualPath, workspace))
                             );
@@ -173,7 +173,7 @@ namespace BarLauncher.Workspacer.Lib.Service
                         foundRepo = true;
                         yield return GetCompletionResult
                         (
-                            "work create {0}".FormatWith(repo.Name),
+                            "create {0}".FormatWith(repo.Name),
                             "Create a new workspace in the {0} repo".FormatWith(repo.Name),
                             () => "create {0}".FormatWith(repo.Name)
                         );
@@ -194,7 +194,7 @@ namespace BarLauncher.Workspacer.Lib.Service
                 {
                     yield return GetActionResult
                     (
-                        "work create {0} {1}".FormatWith(name, value),
+                        "create {0} {1}".FormatWith(name, value),
                         "Create new workspace \"{1}\" in repo {0}".FormatWith(name, value),
                         () => WorkspacerService.CreateDir(actualPath, value)
                     );
@@ -223,7 +223,7 @@ namespace BarLauncher.Workspacer.Lib.Service
                         foundRepo = true;
                         yield return GetCompletionResult
                         (
-                            "work name {0} {1}".FormatWith(repo.Name, repo.Path),
+                            "name {0} {1}".FormatWith(repo.Name, repo.Path),
                             "The current Path for name {0} is {1}".FormatWith(repo.Name, repo.Path),
                             () => "name {0} {1}".FormatWith(repo.Name, repo.Path)
                         );
@@ -235,7 +235,7 @@ namespace BarLauncher.Workspacer.Lib.Service
                     {
                         yield return GetCompletionResult
                         (
-                            "work name {0}".FormatWith(name),
+                            "name {0}".FormatWith(name),
                             "There is no repo named {0} yet".FormatWith(name),
                             () => "name {0}".FormatWith(name)
                         );
@@ -251,7 +251,7 @@ namespace BarLauncher.Workspacer.Lib.Service
                     {
                         yield return GetActionResult
                         (
-                            "work name {0} {1}".FormatWith(name, value),
+                            "name {0} {1}".FormatWith(name, value),
                             "Set repo name {0} to path {1}".FormatWith(name, value),
                             () =>
                             {
@@ -263,7 +263,7 @@ namespace BarLauncher.Workspacer.Lib.Service
                     {
                         yield return GetActionResult
                         (
-                            "work name {0} {1}".FormatWith(name, value),
+                            "name {0} {1}".FormatWith(name, value),
                             "Replace repo name {0} to path {1} (actual value is {2})".FormatWith(name, value, actualPath),
                             () =>
                             {
@@ -276,7 +276,7 @@ namespace BarLauncher.Workspacer.Lib.Service
                 {
                     yield return GetCompletionResultFinal
                     (
-                        "work name {0} {1}".FormatWith(name, value),
+                        "name {0} {1}".FormatWith(name, value),
                         "The current name {0} points to path {1}".FormatWith(name, value),
                         () => "name {0} {1}".FormatWith(name, value)
                     );
@@ -295,7 +295,7 @@ namespace BarLauncher.Workspacer.Lib.Service
                 {
                     yield return GetActionResult
                     (
-                        "work list {0}".FormatWith(repo.Name),
+                        "list {0}".FormatWith(repo.Name),
                         "Go to {0}".FormatWith(repo.Path),
                         () => WorkspacerService.OpenDir(repo.Path)
                     );
@@ -340,7 +340,7 @@ namespace BarLauncher.Workspacer.Lib.Service
                 {
                     yield return GetCompletionResultFinal
                     (
-                        "work config {0}".FormatWith(configName),
+                        "config {0}".FormatWith(configName),
                         "Select {0}={1}".FormatWith(configName, reader(configuration)),
                         () => "config {0}={1}".FormatWith(configName, reader(configuration))
                     );
@@ -351,7 +351,7 @@ namespace BarLauncher.Workspacer.Lib.Service
                     {
                         yield return GetCompletionResultFinal
                         (
-                            "work config {0}".FormatWith(configName),
+                            "config {0}".FormatWith(configName),
                             "The current value for {0} is {1}".FormatWith(configName, reader(configuration)),
                             () => "config {0}={1}".FormatWith(configName, reader(configuration))
                         );
@@ -360,7 +360,7 @@ namespace BarLauncher.Workspacer.Lib.Service
                     {
                         yield return GetActionResult
                         (
-                            "work config {0}".FormatWith(configName),
+                            "config {0}".FormatWith(configName),
                             "Set the value for {0} to {1}".FormatWith(configName, configValue),
                             () =>
                             {
@@ -381,7 +381,7 @@ namespace BarLauncher.Workspacer.Lib.Service
                         {
                             yield return GetCompletionResult
                             (
-                                "work config {0}".FormatWith(configNameReference),
+                                "config {0}".FormatWith(configNameReference),
                                 "{0}={1}".FormatWith(configNameReference, ConfigNames[configNameReference].Key(configuration)),
                                 () => "config {0}".FormatWith(configNameReference)
                             );

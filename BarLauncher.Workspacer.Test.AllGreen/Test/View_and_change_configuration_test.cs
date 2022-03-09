@@ -21,7 +21,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work config KEY VALUE", "View/Change workspacer configuration")
+            .Check("config KEY VALUE", "View/Change workspacer configuration")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -31,7 +31,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work config OpenDirCommand", "OpenDirCommand=\"%1\"")
+            .Check("config OpenDirCommand", "OpenDirCommand=\"%1\"")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -41,7 +41,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work cd NAME [PATTERN] [PATTERN]", "Change to a workspace directory")
+            .Check("cd NAME [PATTERN] [PATTERN]", "Change to a workspace directory")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -51,7 +51,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work config OpenDirCommand", "OpenDirCommand=\"%1\"")
+            .Check("config OpenDirCommand", "OpenDirCommand=\"%1\"")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -61,7 +61,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work config OpenDirCommand", "OpenDirCommand=\"%1\"")
+            .Check("config OpenDirCommand", "OpenDirCommand=\"%1\"")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -71,7 +71,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work config OpenDirCommand", "Select OpenDirCommand=\"%1\"")
+            .Check("config OpenDirCommand", "Select OpenDirCommand=\"%1\"")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -82,7 +82,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work config OpenDirCommand", "The current value for OpenDirCommand is \"%1\"")
+            .Check("config OpenDirCommand", "The current value for OpenDirCommand is \"%1\"")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -94,7 +94,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work config OpenDirCommand", "Set the value for OpenDirCommand to \"C:\\Program Files\\TotalCommander\\TOTALCMD64.EXE\" /T /R=\"%1\"")
+            .Check("config OpenDirCommand", "Set the value for OpenDirCommand to \"C:\\Program Files\\TotalCommander\\TOTALCMD64.EXE\" /T /R=\"%1\"")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -110,7 +110,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check("work config OpenDirCommand", "OpenDirCommand=\"C:\\Program Files\\TotalCommander\\TOTALCMD64.EXE\" /T /R=\"%1\"")
+            .Check("config OpenDirCommand", "OpenDirCommand=\"C:\\Program Files\\TotalCommander\\TOTALCMD64.EXE\" /T /R=\"%1\"")
             .EndUsing()
 
             .EndTest();

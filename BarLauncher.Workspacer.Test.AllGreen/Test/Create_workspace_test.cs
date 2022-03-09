@@ -19,8 +19,8 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check(@"work create data", @"Create a new workspace in the data repo")
-            .Check(@"work create erk", @"Create a new workspace in the erk repo")
+            .Check(@"create data", @"Create a new workspace in the data repo")
+            .Check(@"create erk", @"Create a new workspace in the erk repo")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -30,7 +30,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
             .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check(@"work create data", @"Create a new workspace in the data repo")
+            .Check(@"create data", @"Create a new workspace in the data repo")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()
@@ -45,7 +45,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Test
 
              .UsingList<Bar_launcher_results_fixture>()
             .With<Bar_launcher_results_fixture.Result>(f => f.Title, f => f.SubTitle)
-            .Check(@"work create data log parsing", @"Create new workspace ""log parsing"" in repo data")
+            .Check(@"create data log parsing", @"Create new workspace ""log parsing"" in repo data")
             .EndUsing()
 
             .Using<Bar_launcher_bar_fixture>()

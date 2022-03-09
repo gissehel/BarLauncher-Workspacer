@@ -4,7 +4,7 @@
   "Name": "Workspacer",
   "Description": "Create and manage workspaces",
   "Author": "gissehel",
-  "Version": "2.0.2",
+  "Version": "2.0.3",
   "Language": "csharp",
   "Website": "https://github.com/gissehel/BarLauncher-Workspacer",
   "IcoPath": "BarLauncher-Workspacer-64.png",

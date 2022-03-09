@@ -45,7 +45,7 @@ jobs:
             - name: "Upload Artifacts"
               uses: actions/upload-artifact@v2
               with:
-                name: "BarLauncher-WebApp-${{ env.VERSION_LABEL }}"
+                name: "BarLauncher-Workspacer-${{ env.VERSION_LABEL }}"
                 path: |
                   BarLauncher.Workspacer.Wox-${{ env.VERSION_LABEL }}.wox
                   BarLauncher.Workspacer.Flow.Launcher-${{ env.VERSION_LABEL }}.zip

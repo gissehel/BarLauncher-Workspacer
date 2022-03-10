@@ -13,6 +13,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarLauncher.Workspacer.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarLauncher.Workspacer.Flow.Launcher", "BarLauncher.Workspacer.Flow.Launcher\BarLauncher.Workspacer.Flow.Launcher.csproj", "{25791BA1-526B-4756-853D-053ED55C2ADA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D31838F9-F131-44C1-B696-093D9902FE99}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		Common.targets = Common.targets
+		LICENSE.md = LICENSE.md
+		README.md = README.md
+		VERSION = VERSION
+		version.sh = version.sh
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

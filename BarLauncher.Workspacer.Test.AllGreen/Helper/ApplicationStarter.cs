@@ -26,7 +26,8 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Helper
 
         private string TestName { get; set; }
 
-        public string TestPath => SystemService.ApplicationDataPath;
+        private string testPath = null;
+        public string TestPath => testPath ?? (testPath = GetApplicationDataPath());
 
         public void Init(string testName)
         {
@@ -41,7 +42,7 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Helper
             IWorkspacerService workspacerService = new WorkspacerService(dataAccessService, workspacerConfigurationRepository, workspacerRepoRepository, systemService, workspacerSystemService);
             WorkspacerResultFinder workspacerResultFinder = new WorkspacerResultFinder(barLauncherContextService, workspacerService);
 
-            systemService.ApplicationDataPath = GetApplicationDataPath();
+            systemService.ApplicationDataPath = TestPath;
 
             BarLauncherContextService = barLauncherContextService;
             QueryService = queryService;

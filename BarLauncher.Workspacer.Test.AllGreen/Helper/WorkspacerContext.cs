@@ -1,11 +1,8 @@
 ﻿using AllGreen.Lib.Core;
 using AllGreen.Lib.Core.DomainModel.Script;
 using AllGreen.Lib.Core.DomainModel.ScriptResult;
-using AllGreen.Lib.DomainModel;
 using AllGreen.Lib.DomainModel.ScriptResult;
-using System.IO;
-using System.Text;
-using BarLauncher.EasyHelper;
+using AllGreen.Lib.Engine.Service;
 
 namespace BarLauncher.Workspacer.Test.AllGreen.Helper
 {
@@ -25,11 +22,8 @@ namespace BarLauncher.Workspacer.Test.AllGreen.Helper
         public void OnTestStop()
         {
             var testScriptResult = TestScriptResult as TestScriptResult<WorkspacerContext>;
-            var path = Path.Combine(ApplicationStarter.TestPath, "{0}.agout".FormatWith(testScriptResult.TestScript.Name));
-            using (var writer = new StreamWriter(path, false, new UTF8Encoding(false)))
-            {
-                writer.Write(testScriptResult.GetPipedName(PipedNameOptions.Canonical));
-            }
+            (new JsonOutputService()).Output(testScriptResult, ApplicationStarter.TestPath, testScriptResult.TestScript.Name);
+            (new TextOutputService()).Output(testScriptResult, ApplicationStarter.TestPath, testScriptResult.TestScript.Name);
         }
     }
 }

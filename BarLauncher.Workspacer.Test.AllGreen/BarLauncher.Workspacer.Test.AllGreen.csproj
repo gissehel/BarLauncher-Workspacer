@@ -9,8 +9,8 @@
 		<PackageReference Include="FluentDataAccess.SQLite" Version="2.1.1" />
 		<PackageReference Include="NUnit" Version="3.13.2" />
 		<PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
-		<PackageReference Include="BarLauncher.EasyHelper" Version="2.0.3" />
-		<PackageReference Include="BarLauncher.EasyHelper.Test.Mock" Version="2.0.3" />
+		<PackageReference Include="BarLauncher.EasyHelper" Version="2.0.6" />
+		<PackageReference Include="BarLauncher.EasyHelper.Test.Mock" Version="2.0.6" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,6 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="..\Common.targets" />
-
 	<PropertyGroup>
 		<TargetFramework>net461</TargetFramework>
 	</PropertyGroup>
@@ -19,5 +17,4 @@
 		<ProjectReference Include="..\BarLauncher.Workspacer.Test.Mock\BarLauncher.Workspacer.Test.Mock.csproj" />
 		<ProjectReference Include="..\BarLauncher.Workspacer.Lib\BarLauncher.Workspacer.Lib.csproj" />
 	</ItemGroup>
-
 </Project>

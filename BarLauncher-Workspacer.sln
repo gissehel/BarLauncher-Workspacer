@@ -15,12 +15,34 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarLauncher.Workspacer.Flow
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D31838F9-F131-44C1-B696-093D9902FE99}"
 	ProjectSection(SolutionItems) = preProject
-		.gitignore = .gitignore
-		Common.targets = Common.targets
 		LICENSE.md = LICENSE.md
 		README.md = README.md
 		VERSION = VERSION
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{90318D63-2645-4907-BE7D-8DD80546851D}"
+	ProjectSection(SolutionItems) = preProject
+		comp.sh = comp.sh
+		publish-dev.sh = publish-dev.sh
 		version.sh = version.sh
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{F7A9F8E5-14E8-4389-872D-BC8AF1AA28C0}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\publish.yml = .github\workflows\publish.yml
+		.github\workflows\version.yml = .github\workflows\version.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "git", "git", "{4D9F5C80-E4E8-4601-9198-00654260B8A5}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{45491E87-8447-4161-8CC2-4E4EC9FAA4C2}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
 	EndProjectSection
 EndProject
 Global
@@ -52,6 +74,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{90318D63-2645-4907-BE7D-8DD80546851D} = {D31838F9-F131-44C1-B696-093D9902FE99}
+		{F7A9F8E5-14E8-4389-872D-BC8AF1AA28C0} = {D31838F9-F131-44C1-B696-093D9902FE99}
+		{4D9F5C80-E4E8-4601-9198-00654260B8A5} = {D31838F9-F131-44C1-B696-093D9902FE99}
+		{45491E87-8447-4161-8CC2-4E4EC9FAA4C2} = {D31838F9-F131-44C1-B696-093D9902FE99}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {75127293-0E19-4DA8-B8B3-1208E9023B99}
